@@ -256,9 +256,9 @@ Problems.t1 (Nat/succ n)    =
 </code></pre>
 <p>There are cases where induction is even simpler - all we need to do is understand what is happening. Let's say we want to prove that a number <code>n</code> minus itself is always equal to <code>zero</code>, regardless of what that number is. How would we do it?
 First, we check the case where n is <code>zero</code>, and it is a true equality - <code>zero</code> minus <code>zero</code> is equal to <code>zero</code>. Then, we induct the case to the case of <code>zero</code>, which we know is true. Seems complicated? It's not - it's ridiculously simple. Let's see how it looks in <code>Kind</code>:</p>
-<pre><code class="language-rs ignore">Minus_diag (n: Nat)     : Equal Nat (Minus  n n) Nat.zero
-Minus_diag Nat.zero     = Equal.refl
-Minus_diag (Nat.succ n) = Minus_diag n
+<pre><code class="language-rs ignore">Minus_diag (n: Nat/)    : Equal/ Nat/ (Minus  n n) Nat/zero
+Minus_diag Nat/zero     = Equal/refl
+Minus_diag (Nat/succ n) = Minus_diag n
 </code></pre>
 <p>Notice, this is a simple induction - we say the proof holds for the number and its predecessor, and through recursion, for all predecessors up to <code>zero</code>, which we verified to be true.
 In other words, we prove, in just three lines, that a natural number minus itself will always result in <code>zero</code>, regardless of what that number is.</p>

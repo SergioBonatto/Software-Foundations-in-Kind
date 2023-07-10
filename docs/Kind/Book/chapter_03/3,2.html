@@ -170,34 +170,34 @@
                     <main>
                         <h2 id="more-exercises"><a class="header" href="#more-exercises">More exercises</a></h2>
 <p>You can use <code>rewrite</code> or <code>chain</code> in this proof, choose whichever you find easiest.</p>
-<pre><code class="language-rust ignore">Plus_swap (n: Nat) (m: Nat) (p: Nat) : Equal Nat (Plus n (Plus m p)) (Plus m (Plus n p))
+<pre><code class="language-rust ignore">Plus_swap (n: Nat/) (m: Nat/) (p: Nat/) : Equal/ Nat/ (Plus n (Plus m p)) (Plus m (Plus n p))
 Plus_swap n m p = ?</code></pre>
 <p>Now prove the commutativity of multiplication. (You will probably need to define and prove a separate auxiliary theorem to be used in the proof of this. You may find <code>Plus_swap</code> useful.)</p>
-<pre><code class="language-rust ignore">Mult_comm (n: Nat) (m: Nat) : Equal Nat (Mult n m) (Mult m n)
+<pre><code class="language-rust ignore">Mult_comm (n: Nat/) (m: Nat/) : Equal/ Nat/ (Mult n m) (Mult m n)
 Mult_comm n m = ?</code></pre>
 <p>Take a piece of paper. For each of the following theorems, first think whether (a) it can be proven using just simplification and rewriting, (b) also requires case analysis (destruction), or (c) also requires induction. Write down your prediction.</p>
 <p>Then, fill in the proof. (There is no need to submit your piece of paper; this is just to encourage you to reflect before hacking!)</p>
-<pre><code class="language-rust ignore">Lte_refl (n: Nat) : Equal Bool Bool.true (Lte n n)
+<pre><code class="language-rust ignore">Lte_refl (n: Nat/) : Equal/ Bool/ Bool/true (Lte n n)
 Lte_refl n = ?
 
-Zero_nbeq_s (n: Nat) : Equal Bool (Eql (Nat.zero) (Nat.succ n)) Bool.false
+Zero_nbeq_s (n: Nat/) : Equal/ Bool/ (Eql (Nat/zero) (Nat/succ n)) Bool/false
 Zero_nbeq_s n = ?
 
-And_false_r (b: Bool) : Equal Bool (Andb b Bool.false) Bool.false
+And_false_r (b: Bool/) : Equal/ Bool/ (Andb b Bool/false) Bool/false
 And_false b = ?
 
-S_nbeq_0 (n: Nat) : Equal Bool (Eql (Nat.succ n) Nat.zero) Bool.false
+S_nbeq_0 (n: Nat/) : Equal/ Bool/ (Eql (Nat.succ n) Nat/zero) Bool/false
 
-Mult_1_l (n: Nat) : Equal Nat (Mult (Nat.succ Nat.zero) n) n
+Mult_1_l (n: Nat/) : Equal/ Nat/ (Mult (Nat/succ Nat/zero) n) n
 Mult_1_l n = ?
 
-All3_spec (b: Bool) (c: Bool) : Equal Bool (Orb (Orb (Andb b c) (Notb  b)) (Notb  c)) Bool.true
+All3_spec (b: Bool/) (c: Bool/) : Equal/ Bool/ (Orb (Orb (Andb b c) (Notb  b)) (Notb  c)) Bool/true
 All3_spec b c = ?
 
-Mult_plus_distr_r (n: Nat) (m: Nat) (p: Nat) : Equal Nat (Mult (Plus n m) p) (Plus (Mult n p) (Mult m p))
+Mult_plus_distr_r (n: Nat/) (m: Nat/) (p: Nat/) : Equal/ Nat/ (Mult (Plus n m) p) (Plus (Mult n p) (Mult m p))
 Mult_plus_distr_r n m p = ?
 
-Mult_assoc (n: Nat) (m: Nat) (p: Nat) : Equal Nat (Mult (Mult m p)) (Mult (Mult n m) p)
+Mult_assoc (n: Nat/) (m: Nat/) (p: Nat/) : Equal/ Nat/ (Mult (Mult m p)) (Mult (Mult n m) p)
 Mult_assoc n m p = ?</code></pre>
 
                     </main>

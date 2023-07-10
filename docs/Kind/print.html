@@ -847,7 +847,7 @@ Andb_eq_orb b c prf = ?</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="induction-proof-by-induction"><a class="header" href="#induction-proof-by-induction">Induction: Proof by Induction</a></h1>
 <h2 id="induction"><a class="header" href="#induction">Induction</a></h2>
 <p>In this chapter, we will learn about proof by induction. Before we move on to induction itself, we can analyze simple cases where the reflection of the case already proves the theorem.</p>
-<pre><code class="language-rust ignore">Problems.t0 (n: Nat) : Equal Nat (Plus Nat.zero n) n</code></pre>
+<pre><code class="language-rust ignore">Problems.t0 (n: Nat/) : Equal/ Nat/ (Plus Nat/zero n) n</code></pre>
 <p>When checking the theorem statement, we receive the following response:</p>
 <pre><code class="language-diff">+ INFO  Inspection.
 
@@ -860,11 +860,11 @@ Andb_eq_orb b c prf = ?</code></pre>
                     ┬
                     └Here!
 </code></pre>
-<p>In <em>Problems.t0</em>, Kind automatically reduces the sum of <code>0 + n</code> to <em>n</em>, and we need to prove the equality between <em>n</em> and <em>n</em>. In this case, we simply write <code>Equal.refl</code> and we get the confirmation response:</p>
+<p>In <em>Problems.t0</em>, Kind automatically reduces the sum of <code>0 + n</code> to <em>n</em>, and we need to prove the equality between <em>n</em> and <em>n</em>. In this case, we simply write <code>Equal/refl</code> and we get the confirmation response:</p>
 <pre><code class="language-terminal">All terms check.
 
 </code></pre>
-<pre><code class="language-rust ignore">Problems.t1 (n: Nat) : Equal Nat (Plus n Nat.zero) n</code></pre>
+<pre><code class="language-rust ignore">Problems.t1 (n: Nat/) : Equal/ Nat/ (Plus n Nat/zero) n</code></pre>
 <p>After solving the first problem, the next one is very similar, it is the sum of <code>n + 0 = n</code> and this similarity may lead us to believe that invoking the reflection is enough. However, in the first case, Kind automatically reduces and in this one, we get the following response:</p>
 <pre><code class="language-diff">+ INFO  Inspection.
 
@@ -880,16 +880,16 @@ Andb_eq_orb b c prf = ?</code></pre>
 <p>In the first case, Kind reduces because <code>zero</code> is on the right side and the <code>Type Checker</code> automatically reduces the sum between <code>0</code> and <code>n</code> to <code>n</code>. However, when the first <em>input</em> is a variable, Kind needs to check for each case and as it is a natural number, there are infinitely many cases to be tested, that is, from zero to infinity.</p>
 <p>At first, we may think that there are so many cases and it is impossible to analyze all of them, as there are infinitely many, but soon we realize that it is possible to reduce them to two, one is the number <code>zero</code> and the other is a number that <code>succeeds</code> <code>zero n</code> times after.</p>
 <p>Analyzing the case of zero, our goal is to prove that <code>zero</code> is equal to <code>zero</code>:</p>
-<pre><code class="language-rust ignore">• Expected: Equal Nat Nat.zero Nat.zero</code></pre>
-<p>Now, we just need to give the <code>Equal.refl</code> and the zero case has been proven, we just need to respond to the <code>successor</code> of <code>zero</code>.</p>
+<pre><code class="language-rust ignore">• Expected: Prop.Equal Data.Nat Data.Nat.zero Data.Nat.zero</code></pre>
+<p>Now, we just need to give the <code>Equal/refl</code> and the zero case has been proven, we just need to respond to the <code>successor</code> of <code>zero</code>.</p>
 <p>Our goal is to prove that for every number <code>n</code>, adding <code>0</code> will result in <code>n</code>, but we already have a new tool that helps us in this proof and it is the proof for the <code>zero</code> case, we just need to reduce <code>n</code> until the only thing needed is reflection, and we can do this by recursion and to do that we define the new <code>n</code> as its predecessor. In Kind, we can simply do this by defining the current <code>n</code> as the successor of the next n and recursively calling the function for <code>n</code>. This is done as follows:</p>
-<pre><code class="language-rust ignore">Problems.t1 (Nat.succ n)   = ?</code></pre>
+<pre><code class="language-rust ignore">Problems.t1 (Nat/succ n)   = ?</code></pre>
 <p>and our new goal is to prove that the successor of the sum between <code>n</code> and <code>0</code> is equal to the successor of <code>n</code>.</p>
-<pre><code class="language-rust ignore">- Expected: Equal Nat (Nat.succ (Plus n Nat.zero)) (Nat.succ n)</code></pre>
+<pre><code class="language-rust ignore">- Expected: Prop.Equal Data.Nat (Data.Nat.succ (Plus n Data.Nat.zero)) (Data.Nat.succ n)</code></pre>
 <p>To work with induction in this recursion, we must define a variable for the original case of <code>n</code>.</p>
-<pre><code class="language-rust ignore">Problems.t1 (n: Nat)       : Equal (Plus n Nat.zero) n
-Problems.t1 Nat.zero       = Equal.refl
-Problems.t1 (Nat.succ n)   =
+<pre><code class="language-rust ignore">Problems.t1 (n: Nat/)       : Equal/ (Plus n Nat/zero) n
+Problems.t1 Nat/zero        = Equal/refl
+Problems.t1 (Nat/succ n)    =
     let ind = Problems.t1 n
     ?</code></pre>
 <p>When we give the <code>Type Check</code>, we get the following response:</p>
@@ -908,8 +908,8 @@ Problems.t1 (Nat.succ n)   =
      └Here!
 </code></pre>
 <p>When analyzing our goal and induction, we realize that the only difference between the goal and our variable <code>ind</code> is the <code>Nat.succ</code>. Therefore, we just need to increment the <code>ind</code> variable with <code>Nat.succ</code>. To do this, we create a new variable and use a <code>lambda</code> function:</p>
-<pre><code class="language-rust ignore">let app = Equal.apply (x =&gt; (Nat.succ x)) ind</code></pre>
-<p>In the above case, we call the <code>Equal.apply</code> function to apply our <code>lambda</code> function to <code>ind</code>. The <code>x =&gt; (Nat.succ x)</code> function serves to add <code>Nat.succ</code> to every element received in the variable. Since our <code>ind</code> variable is a function that takes another variable <code>n</code>, our <code>lambda</code> function increments <code>n</code> with <code>Nat.succ</code>, which returns exactly our goal:</p>
+<pre><code class="language-rust ignore">let app = Equal/apply (x =&gt; (Nat/succ x)) ind</code></pre>
+<p>In the above case, we call the <code>Equal/apply</code> function to apply our <code>lambda</code> function to <code>ind</code>. The <code>x =&gt; (Nat/succ x)</code> function serves to add <code>Nat/succ</code> to every element received in the variable. Since our <code>ind</code> variable is a function that takes another variable <code>n</code>, our <code>lambda</code> function increments <code>n</code> with <code>Nat/succ</code>, which returns exactly our goal:</p>
 <pre><code class="language-diff">+ INFO  Inspection.
 
    • Expected: (Equal Nat (Nat.succ (Plus n 0n)) (Nat.succ n)) 
@@ -940,66 +940,66 @@ Minus_diag (Nat.succ n) = Minus_diag n
 In other words, we prove, in just three lines, that a natural number minus itself will always result in <code>zero</code>, regardless of what that number is.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2>
 <p>Prove the following using induction. You may need previously proven results.</p>
-<pre><code class="language-rust ignore">Mult_0_r (n: Nat) : Equal Nat (Mult n Nat.zero) Nat.zero
+<pre><code class="language-rust ignore">Mult_0_r (n: Nat/) : Equal/ Nat/ (Mult n Nat/zero) Nat/zero
 Mult_0_r n = ?
 
-Plus_n_sm (n: Nat) (m: Nat) : Equal Nat (Nat.succ (Plus n m)) (Plus n (Nat.succ m))
+Plus_n_sm (n: Nat/) (m: Nat/) : Equal/ Nat/ (Nat/succ (Plus n m)) (Plus n (Nat/succ m))
 Plus_n_sm n m = ?
 
-Plus_comm (n: Nat) (m: Nat) : Equal Nat (Plus n m) (Plus m n)
+Plus_comm (n: Nat/) (m: Nat/) : Equal/ Nat/ (Plus n m) (Plus m n)
 Plus_comm n m = ?
 
-Add_0_r (n: Nat) : Equal Nat (Plus n Nat.zero) n
+Add_0_r (n: Nat/) : Equal/ Nat/ (Plus n Nat/zero) n
 Add_0_r n = ?
 
-Plus_assoc (n: Nat) (m: Nat) (p: Nat) : Equal Nat (Plus n (Plus m p)) (Plus (Plus n m) p)
+Plus_assoc (n: Nat/) (m: Nat/) (p: Nat/) : Equal/ Nat/ (Plus n (Plus m p)) (Plus (Plus n m) p)
 Plus_assoc n m p = ?</code></pre>
 <p>Consider the following function that doubles its input.</p>
-<pre><code class="language-rust ignore">Double (n: Nat)     : Nat
-Double Nat.zero     = Nat.zero
-Double (Nat.succ n) = Nat.succ (Nat.succ (Double n))</code></pre>
+<pre><code class="language-rust ignore">Double (n: Nat/)     : Nat/
+Double Nat/zero     = Nat/zero
+Double (Nat/succ n) = Nat/succ (Nat/succ (Double n))</code></pre>
 <p>Use induction to prove the following theorems about <code>Double</code>:</p>
-<pre><code class="language-rust ignore">Double_plus (n: Nat) : Equal Nat (Double n) (Plus n n)
+<pre><code class="language-rust ignore">Double_plus (n: Nat/) : Equal/ Nat/ (Double n) (Plus n n)
 Double_plus n = ?</code></pre>
 <p>Some theorems require analyzing the best way to prove them, for example, to prove that a number is even, we could prove it for its successor, but that would require us to prove it for the successor of the successor, making the proof of <code>Evenb</code> more difficult by induction. So it's important to realize when it is necessary and when it is not.</p>
-<pre><code class="language-rust ignore">Evenb_s (n: Nat) : Equal Bool (Evenb (Nat.succ n)) (Notb  (Evenb n))
+<pre><code class="language-rust ignore">Evenb_s (n: Nat/) : Equal/ Bool/ (Evenb (Nat/succ n)) (Notb  (Evenb n))
 Evenb_s n = ?</code></pre>
 <h2 id="another-case"><a class="header" href="#another-case">Another case</a></h2>
 <p>Let's verify if the equality <code>n +(m + 1) = 1 + (n + m)</code> is true.</p>
 <p>First, our problem:</p>
-<pre><code class="language-rust ignore">Problems.t2 (n: Nat) (m: Nat) : Equal Nat (Plus n (Nat.succ m)) (Nat.succ(Plus n m))</code></pre>
+<pre><code class="language-rust ignore">Problems.t2 (n: Nat/) (m: Nat/) : Equal/ Nat/ (Plus n (Nat/succ m)) (Nat/succ (Plus n m))</code></pre>
 <p>We verify the base case, when <code>n</code> is zero:</p>
-<pre><code class="language-rust ignore">Problems.t2 Nat.zero m = Equal.refl</code></pre>
+<pre><code class="language-rust ignore">Problems.t2 Nat/zero m = Equal/refl</code></pre>
 <p>and move on to the next case</p>
-<pre><code class="language-rust ignore">Problems.t2 (Nat.succ n) m = ?</code></pre>
+<pre><code class="language-rust ignore">Problems.t2 (Nat/succ n) m = ?</code></pre>
 <p>and our current goal becomes:</p>
-<pre><code class="language-rust ignore">• Expected: Equal Nat (Nat.succ (Plus n (Nat.succ m))) (Nat.succ (Nat.succ (Plus n m)))</code></pre>
+<pre><code class="language-rust ignore">• Expected: Prop.Equal Data.Nat (Data.Nat.succ (Plus n (Data.Nat.succ m))) (Data.Nat.succ (Data.Nat.succ (Plus n m)))</code></pre>
 <p>Translating, the successor of the addition of <code>n</code> and the successor of <code>m</code> is equal to the successor of the successor of the addition of <code>n</code> and <code>m</code>. To solve this problem, we will invoke induction:</p>
 <pre><code class="language-rust ignore">let ind = Problems.t2 n m</code></pre>
 <p>and our current goal is to prove that:</p>
-<pre><code class="language-rust ignore">• Expected: Equal Nat (Nat.succ (Plus n (Nat.succ m))) (Nat.succ (Nat.succ (Plus n m)))</code></pre>
+<pre><code class="language-rust ignore">• Expected: Prop.Equal Data.Nat (Data.Nat.succ (Plus n (Data.Nat.succ m))) (Data.Nat.succ (Data.Nat.succ (Plus n m)))</code></pre>
 <p>Again, translating, that the <code>successor</code> of the addition of <code>n</code> and the <code>successor</code> of <code>m</code> is equal to the <code>successor</code> of the <code>successor</code> of the addition of <code>n</code> and <code>m</code>.</p>
 <p>But now we have a very useful tool, our variable ind which is:</p>
-<pre><code class="language-rust ignore">Equal Nat (Plus n (Nat.succ m)) (Nat.succ (Plus n m))</code></pre>
+<pre><code class="language-rust ignore">Equal/ Nat/ (Plus n (Nat/succ m)) (Nat/succ (Plus n m))</code></pre>
 <p>Now, analyzing our goal and our variable ind, we can see that it is enough to add <code>Nat.succ</code> to both sides of the induction, and it will be exactly the same as our goal. To do this, we will use a <code>lambda</code> function:</p>
-<pre><code class="language-rust ignore">let app = Equal.apply (x =&gt; (Nat.succ x)) ind</code></pre>
+<pre><code class="language-rust ignore">let app = Equal/apply (x =&gt; (Nat/succ x)) ind</code></pre>
 <p>And our variable <code>app</code> will return our goal:</p>
-<pre><code class="language-rust ignore">Equal Nat (Nat.succ (Plus n (Nat.succ m))) (Nat.succ (Nat.succ (Plus n m)))</code></pre>
+<pre><code class="language-rust ignore">Equal/ Nat/ (Nat/succ (Plus n (Nat/succ m))) (Nat/succ (Nat/succ (Plus n m)))</code></pre>
 <p>Just return app and Kind will give us the coveted <code>All terms check</code>.</p>
 <h1 id="using-other-theorems"><a class="header" href="#using-other-theorems">Using other theorems</a></h1>
 <p>In Kind, as in informal mathematics, large proofs are often divided into a sequence of theorems, with later proofs referring to earlier theorems. But sometimes a proof will require some varied fact that is too trivial and of too little general interest to give it its own higher-level name. In these cases, it is convenient to be able to simply state and prove the necessary &quot;sub-theorem&quot; exactly at the point where it is used.</p>
 <p>Let's analyze the following addition commutation theorem:</p>
-<pre><code class="language-rust ignore">Problems.t3 (n: Nat) (m: Nat) : Equal Nat (Plus n  m) (Plus m n)</code></pre>
+<pre><code class="language-rust ignore">Problems.t3 (n: Nat/) (m: Nat/) : Equal/ Nat/ (Plus n  m) (Plus m n)</code></pre>
 <p>In the first case, for <code>n</code> and <code>m</code> equal to zero we have a reflection:</p>
-<pre><code class="language-rust ignore">Problems.t3 Nat.zero Nat.zero = Equal.refl</code></pre>
+<pre><code class="language-rust ignore">Problems.t3 Nat/zero Nat/zero = Equal/refl</code></pre>
 <p>So we move on to the next case:</p>
-<pre><code class="language-rust ignore">Problems.t3 (Nat.succ n) m = ?</code></pre>
+<pre><code class="language-rust ignore">Problems.t3 (Nat/succ n) m = ?</code></pre>
 <p>And here it seems that we have a new problem:</p>
-<pre><code class="language-rust ignore">Expected: Equal Nat (Nat.succ (Plus n m)) (Plus m (Nat.succ n))
+<pre><code class="language-rust ignore">Expected: Prop.Equal Data.Nat (Data.Nat.succ (Plus n m)) (Plus m (Data.Nat.succ n))
 </code></pre>
 <p>Analyzing the problem, we realize that there is a theorem already proven within it, that the <code>successor</code> of the addition of two numbers is equal to the addition of one number with its <code>successor</code>, so we can use that to our advantage.</p>
 <p>We will start by applying a <code>Nat.succ</code> to our original problem:</p>
-<pre><code class="language-rust ignore">let ind_a = Equal.apply (x =&gt; (Nat.succ x)) (Problems.t3 n m )</code></pre>
+<pre><code class="language-rust ignore">let ind_a = Equal/apply (x =&gt; (Nat/succ x)) (Problems.t3 n m )</code></pre>
 <p>Then we invoke our already solved problem, <code>Problems.t2</code>:</p>
 <pre><code class="language-rust ignore">let ind_b = Problems.t2 m n</code></pre>
 <p>When we give the <code>Type Check</code>, the terminal returns:</p>
@@ -1021,43 +1021,43 @@ Evenb_s n = ?</code></pre>
      └Here!
 </code></pre>
 <p>Now we can see that the first part of <code>ind_a</code> is the inverse of the first part of our goal and the first part of <code>ind_b</code> is equal to the second part of the goal, we just need to organize and join the necessary parts. To do this, we will use <code>Equal.mirror</code> and <code>Equal.chain</code>.</p>
-<pre><code class="language-rust ignore">let ind_c = Equal.chain ind_b Equal.mirror ind_a</code></pre>
+<pre><code class="language-rust ignore">let ind_c = Equal/chain ind_b Equal/mirror ind_a</code></pre>
 <p>And <code>ind_c</code> returns a value similar to the desired one:</p>
-<pre><code class="language-rust ignore">• Expected: Equal Nat (Nat.succ (Plus n m)) (Plus m (Nat.succ n))
-•   ind_c : Equal Nat (Plus m (Nat.succ n)) (Nat.succ (Plus n m))</code></pre>
+<pre><code class="language-rust ignore">• Expected: Prop.Equal Data.Nat (Data.Nat.succ (Plus n m)) (Plus m (Data.Nat.succ n))
+•   ind_c : Prop.Equal Data.Nat (Plus m (Data.Nat.succ n)) (Data.Nat.succ (Plus n m))</code></pre>
 <p>We can see that one is the other mirrored, to make them equal, we will use <code>Equal.mirror</code> again:</p>
-<pre><code class="language-rust ignore">let app = Equal.mirror ind_c</code></pre>
+<pre><code class="language-rust ignore">let app = Equal/mirror ind_c</code></pre>
 <p>When we call <code>app</code>, the <code>Type Check</code> returns the message <code>All terms checked</code> and thus we prove, through induction and using another proof, the commutation of addition, that the sum of <code>n</code> and <code>m</code> is equal to the sum of <code>m</code> and <code>n</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="more-exercises-1"><a class="header" href="#more-exercises-1">More exercises</a></h2>
 <p>You can use <code>rewrite</code> or <code>chain</code> in this proof, choose whichever you find easiest.</p>
-<pre><code class="language-rust ignore">Plus_swap (n: Nat) (m: Nat) (p: Nat) : Equal Nat (Plus n (Plus m p)) (Plus m (Plus n p))
+<pre><code class="language-rust ignore">Plus_swap (n: Nat/) (m: Nat/) (p: Nat/) : Equal/ Nat/ (Plus n (Plus m p)) (Plus m (Plus n p))
 Plus_swap n m p = ?</code></pre>
 <p>Now prove the commutativity of multiplication. (You will probably need to define and prove a separate auxiliary theorem to be used in the proof of this. You may find <code>Plus_swap</code> useful.)</p>
-<pre><code class="language-rust ignore">Mult_comm (n: Nat) (m: Nat) : Equal Nat (Mult n m) (Mult m n)
+<pre><code class="language-rust ignore">Mult_comm (n: Nat/) (m: Nat/) : Equal/ Nat/ (Mult n m) (Mult m n)
 Mult_comm n m = ?</code></pre>
 <p>Take a piece of paper. For each of the following theorems, first think whether (a) it can be proven using just simplification and rewriting, (b) also requires case analysis (destruction), or (c) also requires induction. Write down your prediction.</p>
 <p>Then, fill in the proof. (There is no need to submit your piece of paper; this is just to encourage you to reflect before hacking!)</p>
-<pre><code class="language-rust ignore">Lte_refl (n: Nat) : Equal Bool Bool.true (Lte n n)
+<pre><code class="language-rust ignore">Lte_refl (n: Nat/) : Equal/ Bool/ Bool/true (Lte n n)
 Lte_refl n = ?
 
-Zero_nbeq_s (n: Nat) : Equal Bool (Eql (Nat.zero) (Nat.succ n)) Bool.false
+Zero_nbeq_s (n: Nat/) : Equal/ Bool/ (Eql (Nat/zero) (Nat/succ n)) Bool/false
 Zero_nbeq_s n = ?
 
-And_false_r (b: Bool) : Equal Bool (Andb b Bool.false) Bool.false
+And_false_r (b: Bool/) : Equal/ Bool/ (Andb b Bool/false) Bool/false
 And_false b = ?
 
-S_nbeq_0 (n: Nat) : Equal Bool (Eql (Nat.succ n) Nat.zero) Bool.false
+S_nbeq_0 (n: Nat/) : Equal/ Bool/ (Eql (Nat.succ n) Nat/zero) Bool/false
 
-Mult_1_l (n: Nat) : Equal Nat (Mult (Nat.succ Nat.zero) n) n
+Mult_1_l (n: Nat/) : Equal/ Nat/ (Mult (Nat/succ Nat/zero) n) n
 Mult_1_l n = ?
 
-All3_spec (b: Bool) (c: Bool) : Equal Bool (Orb (Orb (Andb b c) (Notb  b)) (Notb  c)) Bool.true
+All3_spec (b: Bool/) (c: Bool/) : Equal/ Bool/ (Orb (Orb (Andb b c) (Notb  b)) (Notb  c)) Bool/true
 All3_spec b c = ?
 
-Mult_plus_distr_r (n: Nat) (m: Nat) (p: Nat) : Equal Nat (Mult (Plus n m) p) (Plus (Mult n p) (Mult m p))
+Mult_plus_distr_r (n: Nat/) (m: Nat/) (p: Nat/) : Equal/ Nat/ (Mult (Plus n m) p) (Plus (Mult n p) (Mult m p))
 Mult_plus_distr_r n m p = ?
 
-Mult_assoc (n: Nat) (m: Nat) (p: Nat) : Equal Nat (Mult (Mult m p)) (Mult (Mult n m) p)
+Mult_assoc (n: Nat/) (m: Nat/) (p: Nat/) : Equal/ Nat/ (Mult (Mult m p)) (Mult (Mult n m) p)
 Mult_assoc n m p = ?</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="data-structures"><a class="header" href="#data-structures">Data Structures</a></h1>
 <h2 id="lists--working-with-structured-data"><a class="header" href="#lists--working-with-structured-data">Lists : Working with Structured Data</a></h2>

@@ -34,6 +34,7 @@
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "../../";
@@ -71,10 +72,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -87,11 +90,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -146,7 +171,56 @@
                         <h2 id="modules"><a class="header" href="#modules">Modules</a></h2>
 <!-- TODO fill in when we have a module system -->
 <p>We don't have a module system yet :pensive:. To use functions from other files,
-you need to create a file within the same directory (e.g., the root folder of <a href="github.com/Kindelia/Wikind">Wikind</a>).</p>
+you need to create a file within the same directory (e.g., the root folder of <a href="https://github.com/HigherOrderCO/Kindex">Kindex</a>.</p>
+<h2 id="use"><a class="header" href="#use">Use</a></h2>
+<p>The <em>use</em> statement is a useful feature in the <em>Kind</em> language that allows you to create aliases for functions or data types. It simplifies the usage of specific functions or types in your code. Let's explore its usage with practical examples.</p>
+<h3 id="step-1-importing-functions-with-use"><a class="header" href="#step-1-importing-functions-with-use">Step 1: Importing Functions with use</a></h3>
+<p>The first use of use is to import functions. Suppose you are working with the <code>Data.Nat.succ</code> function and want to import it with a shorter alias, such as <em>Succ</em>, for easier usage in your code. Here's an example:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use Data.Nat as Succ
+<span class="boring">}</span></code></pre></pre>
+<p>With this statement, you import the <code>Data.Nat.succ</code> function and associate it with the <em>Succ</em> alias. You can now use Succ instead of <code>Data.Nat.succ</code> to refer to that function.</p>
+<h3 id="step-2-using-aliases-for-data-types"><a class="header" href="#step-2-using-aliases-for-data-types">Step 2: Using Aliases for Data Types</a></h3>
+<p>In addition to importing functions, use can also create aliases for specific data types. Suppose you want to create an alias for the <code>Data.Nat</code> type called <em>Nat</em>. Here's an example:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use Data.Nat as Nat
+<span class="boring">}</span></code></pre></pre>
+<p>With this statement, you import the <code>Data.Nat</code> type and associate it with the <code>Nat/</code> alias. You can now use <code>Nat/</code> to refer to the <em>Nat</em> data type.</p>
+<p>Now, let's use the <code>Nat/</code> alias in a function called <code>Succ</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>Succ (n: Nat/) : Nat/
+Succ n = Nat/succ n
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>Succ</code> function takes a parameter <code>n</code> of type <code>Nat/</code> and returns a value of the same <em>type</em> . Within the function body, we use the <code>Nat/</code> alias to invoke the <em>succ</em> function associated with the <em>Nat</em>.</p>
+<h3 id="step-3-using-aliases-in-other-functions"><a class="header" href="#step-3-using-aliases-in-other-functions">Step 3: Using Aliases in Other Functions</a></h3>
+<p>Next, let's explore how aliases can be used in other functions. Consider the <code>Is_equal</code> function, which compares two <code>Bool/</code> values and returns a <code>Bool/</code> result:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>Is_equal (b1: Bool/) (b2: Bool/) : Bool/
+Is_equal b1 b2 = 
+  match Bool/ b1 {
+    true  =&gt; b2
+    false =&gt; match b2 {
+      true  =&gt; Bool/false
+      false =&gt; Bool/true
+    }
+  }
+
+<span class="boring">}</span></code></pre></pre>
+<p>In this example, we use the <code>Bool/</code> alias to refer to the <code>Data.Bool</code> type within the match pattern. This makes the code more readable and avoids unnecessary repetition of the full module name.</p>
+<h3 id="step-4-explaining-aliases-with-an-additional-example"><a class="header" href="#step-4-explaining-aliases-with-an-additional-example">Step 4: Explaining Aliases with an Additional Example</a></h3>
+<p>To further illustrate the use of aliases, let's consider the <code>Add_zero</code> function, which proves that adding <code>zero</code> to a number <code>n</code> results in <code>n</code> using the <code>Equal</code> for propositional equality:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>Add_zero (n: Nat/) : Equal/ (Nat/add 0n n) n
+Add_zero n = Equal/refl
+<span class="boring">}</span></code></pre></pre>
+<p>In this function, we use the <code>Equal/</code> alias to refer to the <code>Prop.Equal</code> type, which handles propositional equality. With the alias, we declare that the return type of the function is a <em>proof</em> of equality between the expression <code>(Nat/add 0n n)</code> and <code>n</code>. We also use the <code>Equal/refl</code> alias to create a reflexive proof of equality.</p>
+<h3 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h3>
+<p>The use statement is a powerful tool in the Kind language that allows you to create aliases for functions or data types. It simplifies the usage of functions and types, making the code more readable and concise. With use, you can import functions with shorter aliases and create aliases for specific data types. I hope this tutorial has helped you understand the usage of use in Kind.</p>
 
                     </main>
 
@@ -177,22 +251,6 @@ you need to create a file within the same directory (e.g., the root folder of <a
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -212,5 +270,6 @@ you need to create a file within the same directory (e.g., the root folder of <a
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

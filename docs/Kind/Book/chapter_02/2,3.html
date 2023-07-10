@@ -34,6 +34,7 @@
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "../../";
@@ -71,10 +72,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -87,11 +90,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -154,7 +179,7 @@
 <p>In fact, at the time of writing, you need to be working within the Wikind folder to do proofs and the theorem resolution utilities are not built-in.</p>
 <p>Functions that operate on booleans are defined in the same way as seen earlier:</p>
 <pre><code class="language-rust ignore">// Negação lógica
-Notb (b: Bool) : Bool
+Notb (b: Bool)  : Bool
 Notb Bool.true  = Bool.false
 Notb Bool.false = Bool.true
 
@@ -169,49 +194,49 @@ Orb Bool.true  b2 = Bool.true
 Orb Bool.false b2 = b2</code></pre>
 <p>The last two functions demonstrate the syntax of Kind for multi-argument functions, and also show that it is possible to <em>pattern match</em> only on some of the variables of the function, not necessarily all.</p>
 <p>The cases of the last function can be exhaustively tested (all possibilities) as shown below, creating the truth table of the logical operation.</p>
-<pre><code class="language-rust ignore">TestOrb1 : Equal Bool (Orb Bool.true Bool.false) Bool.true
-TestOrb1 = Equal.refl
+<pre><code class="language-rust ignore">TestOrb1 : Prop.Equal Bool (Orb Bool.true Bool.false) Bool.true
+TestOrb1 = Prop.Equal.refl
 
-TestOrb2 : Equal Bool (Orb Bool.false Bool.false) Bool.false
-TestOrb2 = Equal.refl
+TestOrb2 : Prop.Equal Bool (Orb Bool.false Bool.false) Bool.false
+TestOrb2 = Prop.Equal.refl
 
-TestOrb3 : Equal Bool (Orb Bool.false Bool.true) Bool.true
-TestOrb3 = Equal.refl
+TestOrb3 : Prop.Equal Bool (Orb Bool.false Bool.true) Bool.true
+TestOrb3 = Prop.Equal.refl
 
-TestOrb4 : Equal Bool (Orb Bool.true Bool.true) Bool.true
-TestOrb4 = Equal.refl</code></pre>
+TestOrb4 : Prop.Equal Bool (Orb Bool.true Bool.true) Bool.true
+TestOrb4 = Prop.Equal.refl</code></pre>
 <h4 id="nandb"><a class="header" href="#nandb">Nandb</a></h4>
 <p>Replace the hole &quot;?&quot;, completing the following function;</p>
 <p>then check if it is correct using the following statements (Analogous to how it was done for the <code>Orb</code> function). The function returns <code>Bool.true</code> if any of its inputs is <code>Bool.false</code>.</p>
 <pre><code class="language-rust ignore">Nandb (b1: Bool) (b2: Bool) : Bool
 Nandb b1 b2 = ?
 
-Test_nandb1 : Equal Bool (Nandb Bool.true Bool.false) Bool.true
+Test_nandb1 : Prop.Equal Bool (Nandb Bool.true Bool.false) Bool.true
 Test_nandb1 = ?
 
-Test_nandb2 : Equal Bool (Nandb Bool.false Bool.false) Bool.true
+Test_nandb2 : Prop.Equal Bool (Nandb Bool.false Bool.false) Bool.true
 Test_nandb2 = ?
 
-Test_nandb3 : Equal Bool (Nandb Bool.false Bool.true) Bool.true
+Test_nandb3 : Prop.Equal Bool (Nandb Bool.false Bool.true) Bool.true
 Test_nandb3 = ?
 
-Test_nandb4 : Equal Bool (Nandb Bool.true Bool.true) Bool.false
+Test_nandb4 : Prop.Equal Bool (Nandb Bool.true Bool.true) Bool.false
 Test_nandb4 = ?</code></pre>
 <h4 id="and3"><a class="header" href="#and3">And3</a></h4>
 <p>Do the same for the <code>Andb3</code> function below. This function should return <code>Bool.true</code> if all inputs are <code>Bool.true</code>, and <code>Bool.false</code> otherwise.</p>
 <pre><code class="language-rust ignore">Andb3 (b1: Bool) (b2: Bool) (b3: Bool) : Bool
 Andb3 b1 b2 b3 = ?
 
-Test_andb3_1 Equal Bool (Andb3 Bool.true Bool.true Bool.true) Bool.true
+Test_andb3_1 Prop.Equal Bool (Andb3 Bool.true Bool.true Bool.true) Bool.true
 Test_andb3_1 = ?
 
-Test_andb3_2 Equal Bool (Andb3 Bool.false Bool.true Bool.true) Bool.false
+Test_andb3_2 Prop.Equal Bool (Andb3 Bool.false Bool.true Bool.true) Bool.false
 Test_andb3_2 = ?
 
-Test_andb3_3 Equal Bool (Andb3 Bool.true Bool.false Bool.true) Bool.false
+Test_andb3_3 Prop.Equal Bool (Andb3 Bool.true Bool.false Bool.true) Bool.false
 Test_andb3_3 = ?
 
-Test_andb3_4 Equal Bool (Andb3 Bool.true Bool.true Bool.false) Bool.false
+Test_andb3_4 Prop.Equal Bool (Andb3 Bool.true Bool.true Bool.false) Bool.false
 Test_andb3_4 = ?</code></pre>
 
                     </main>
@@ -243,22 +268,6 @@ Test_andb3_4 = ?</code></pre>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -278,5 +287,6 @@ Test_andb3_4 = ?</code></pre>
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

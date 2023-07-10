@@ -34,6 +34,7 @@
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "../../";
@@ -71,10 +72,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -87,11 +90,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -159,22 +184,22 @@ Above, we have both an example of creating a new <code>Day : Type</code>, and de
 <p>Now that we have defined what a Day is, we can write functions that operate using this type. Type the following:</p>
 <pre><code class="language-rust ignore">NextWeekday (d: Day) : Day</code></pre>
 <p>This declares that we have a function called NextWeekday, which takes an argument called <code>d</code>, of type <code>Day</code>, and returns a <code>Day</code>. Continue defining the function as follows:</p>
-<pre><code class="language-rust ignore">NextWeekday Day.monday  = ?
-NextWeekday Day.tuesday    = ?
-NextWeekday Day.wednesday  = ?
-NextWeekday Day.thursday = ?
-NextWeekday Day.friday   = ?
-NextWeekday Day.saturday  = ?
-NextWeekday Day.sunday  = ?</code></pre>
+<pre><code class="language-rust ignore">NextWeekday Day.monday      = ?
+NextWeekday Day.tuesday     = ?
+NextWeekday Day.wednesday   = ?
+NextWeekday Day.thursday    = ?
+NextWeekday Day.friday      = ?
+NextWeekday Day.saturday    = ?
+NextWeekday Day.sunday      = ?</code></pre>
 <p>Here, we are doing what we call <em>pattern matching</em>. We are declaring how the function should run for each possibility of the input <code>d</code>. It won't always be necessary to do this, as will be shown in examples later on.</p>
 <p>Finally, complete the functions by writing what each one should return, and use spaces to style as you prefer:</p>
-<pre><code class="language-rust ignore">NextWeekday Day.monday = Day.tuesday
-NextWeekday Day.tuesday   = Day.quarta
-NextWeekday Day.wednesday = Day.thursday
-NextWeekday Day.thursday = Day.sexta
-NextWeekday Day.friday  = Day.monday
-NextWeekday Day.saturday = Day.monday
-NextWeekday Day.sunday = Day.monday</code></pre>
+<pre><code class="language-rust ignore">NextWeekday Day.monday      = Day.tuesday
+NextWeekday Day.tuesday     = Day.quarta
+NextWeekday Day.wednesday   = Day.thursday
+NextWeekday Day.thursday    = Day.sexta
+NextWeekday Day.friday      = Day.monday
+NextWeekday Day.saturday    = Day.monday
+NextWeekday Day.sunday      = Day.monday</code></pre>
 <p>With the function finished, we can check its operation with some examples. The main way to do this in Kind is to create a <code>Main</code> function in your file and run it with the command <code>kind2 run &lt;file&gt;</code>.</p>
 <p>For example, if you write the following <code>Main</code> and run the file:</p>
 <pre><code class="language-rust ignore">Main {
@@ -186,8 +211,8 @@ NextWeekday Day.sunday = Day.monday</code></pre>
 </code></pre>
 <p>Another way to test your code is to say what we expect the code to return, through a proof:</p>
 <pre><code class="language-rust ignore">// // The third workday after a Monday is a Thursday
-TestNextWeekday : Equal Day (NextWeekday (NextWeekday (NextWeekday Day.monday))) Day.thursday
-TestNextWeekday = Equal.refl</code></pre>
+TestNextWeekday : Prop.Equal Day (NextWeekday (NextWeekday (NextWeekday Day.monday))) Day.thursday
+TestNextWeekday = Prop.Equal.refl</code></pre>
 <p>The details of how proofs work will be explained later on. For now, what needs to be understood is:</p>
 <ul>
 <li>We have the realization that <code>(NextWeekday (NextWeekday (NextWeekday Day.monday)))</code> is equal to <code>Day.thursday</code></li>
@@ -227,22 +252,6 @@ TestNextWeekday = Equal.refl</code></pre>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -262,5 +271,6 @@ TestNextWeekday = Equal.refl</code></pre>
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

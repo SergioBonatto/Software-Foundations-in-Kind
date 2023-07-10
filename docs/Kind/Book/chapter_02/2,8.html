@@ -171,7 +171,7 @@
                         <h2 id="proof-by-application"><a class="header" href="#proof-by-application">Proof by Application</a></h2>
 <p>Our first tool for proving non-trivial theorems will be applying functions to both sides of an equality. For this, we will use the function <code>Equal.apply</code>, which takes an equality (<code>Equal</code>) and a function, and applies this function to both sides of the equality, generating a new equality.</p>
 <p>For example:</p>
-<pre><code class="language-rust ignore">Example_apply (n: Nat) (m: Nat) (e: Equal Nat m n) : Equal Nat (Nat.succ m) (Nat.succ n)
+<pre><code class="language-rust ignore">Example_apply (n: Nat) (m: Nat) (e: Equal/ Nat m n) : Equal/ Nat (Nat.succ m) (Nat.succ n)
 Example_apply n m e = ?</code></pre>
 <p>What do we have here? We have a proof that takes another proof/equality as argument. This means that we will carry out our proof assuming that the proof given as argument is also true. So, reading the statement of the proof, we have: &quot;Given two naturals, <code>m</code> and <code>n</code>, and a proof that they are equal, prove that <code>Nat.succ m</code> and <code>Nat.succ n</code> are also equal&quot;.</p>
 <p>We learned in our math classes that applying a function to both sides of an equality preserves the equality (<code>x/2 = 3 -&gt; 2x/2 = 23</code>), and we can see that to prove what we want, we need to apply the function <code>Nat.succ</code> to both sides of <code>e</code>, using <code>Equal.apply</code>.</p>
@@ -206,10 +206,10 @@ Example_apply n m e = ?</code></pre>
       ┬
       └Here!
 </code></pre>
-<p>As <code>e_apply</code> is an equality of type <code>Equal Nat (Nat.succ m) (Nat.succ n)</code>, the proof we are looking for is simply to return it, and we will have concluded our proof.</p>
-<pre><code class="language-rust ignore">Example_apply (n: Nat) (m: Nat) (e: Equal Nat m n) : Equal Nat (Nat.succ m) (Nat.succ n)
+<p>As <code>e_apply</code> is an equality of type <code>Equal/ Nat (Nat.succ m) (Nat.succ n)</code>, the proof we are looking for is simply to return it, and we will have concluded our proof.</p>
+<pre><code class="language-rust ignore">Example_apply (n: Nat) (m: Nat) (e: Equal/ Nat m n) : Equal/ Nat (Nat.succ m) (Nat.succ n)
 Example_apply n m e =
-  let e_apply = Equal.apply (x =&gt; Nat.succ x) e
+  let e_apply = Equal/apply (x =&gt; Nat.succ x) e
   e_apply</code></pre>
 <pre><code class="language-terminal">  All terms checked.
 </code></pre>

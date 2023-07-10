@@ -171,18 +171,18 @@
                         <h2 id="proof-by-simplification"><a class="header" href="#proof-by-simplification">Proof by Simplification</a></h2>
 <p>Now that we have defined some data types and functions, let's start proving properties of their behaviors. In fact, we have already been doing this: each function in the previous sections that starts with <code>Test</code> makes a precise assertion about the behavior of some function for specific inputs. The proofs of these assertions were always the same: use <code>Equal.refl</code> to check that both sides are indeed identical.</p>
 <p>The same type of &quot;proof by simplification&quot; can be used to prove more interesting properties. For example, the fact that <code>Nat.zero</code> is a &quot;neutral element&quot; on the left-hand side of addition can be proven simply by observing that <code>Plus Nat.zero n</code> reduces to <code>n</code>, regardless of what <code>n</code> is, a fact that can be read directly from the definition of <code>Plus</code>.</p>
-<pre><code class="language-rust ignore">Plus_Z_n (n: Nat) : Equal Nat (Plus Nat.zero n) n
-Plus_Z_n n = Equal.refl</code></pre>
+<pre><code class="language-rust ignore">Plus_Z_n (n: Nat) : Equal/ Nat (Plus Nat.zero n) n
+Plus_Z_n n = Equal/refl</code></pre>
 <p>Other similar theorems can be proven in a similar way.</p>
-<pre><code class="language-rust ignore">Plus_1_l (n: Nat) : Equal Nat (Plus (Nat.succ Nat.zero) n) (Nat.succ n)
-Plus_1_l n = Equal.refl
+<pre><code class="language-rust ignore">Plus_1_l (n: Nat) : Equal/ Nat (Plus (Nat.succ Nat.zero) n) (Nat.succ n)
+Plus_1_l n = Equal/refl
 
-Mult_0_l (n: Nat) : Equal Nat (Mult Nat.zero n) Nat.zero
-Mult_0_l n = Equal.refl </code></pre>
+Mult_0_l (n: Nat) : Equal/ Nat (Mult Nat.zero n) Nat.zero
+Mult_0_l n = Equal/refl </code></pre>
 <p>The <code>_l</code> indicates that the proof involves the value on the left-hand side. For example: the proof of adding 1 on the left-hand side <code>(Plus_1_l)</code> or the proof of multiplying by zero on the left-hand side <code>(Mult_0_l)</code>.</p>
 <p>Although simplification is powerful enough to prove some general facts, there are several statements that cannot be demonstrated with simplification alone. For example, we cannot use it to prove that <code>Nat.zero</code> is a neutral element for addition on the right-hand side.</p>
-<pre><code class="language-rust ignore">Plus_n_Z (n: Nat) : Equal Nat n (Plus n Nat.zero)
-Plus_n_Z n = Equal.refl</code></pre>
+<pre><code class="language-rust ignore">Plus_n_Z (n: Nat) : Equal/ Nat n (Plus n Nat.zero)
+Plus_n_Z n = Equal/refl</code></pre>
 <pre><code class="language-diff">- ERROR Type mismatch  
 
    • Got      : Equal Nat n n

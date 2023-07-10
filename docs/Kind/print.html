@@ -505,13 +505,13 @@ Add_zero n = Equal/refl
 </ul>
 </li>
 </ul>
-<p>Every type defined inductively (such as <code>Nat</code>, <code>Bool</code> ou <code>Dia</code>) is a set of expressions. The definition of <code>Nat</code> says how expressions of type <code>Nat</code> can be constructed:</p>
+<p>Every type defined inductively (such as <code>Nat</code>, <code>Bool</code> ou <code>Day</code>) is a set of expressions. The definition of <code>Nat</code> says how expressions of type <code>Nat</code> can be constructed:</p>
 <ul>
 <li>The expression <code>Nat.zero</code> belongs to the set of <code>Nat</code>;</li>
 <li>If <code>n</code> is an expression in the set of <code>Nat</code>, then <code>(Nat.succ n)</code> is also an expression in the set of <code>Nat</code>;</li>
 <li>Expressions formed in these two ways are the only ones that belong to <code>Nat</code>.</li>
 </ul>
-<p>The same rules apply to our definitions of <code>Dia</code> and <code>Bool</code>.
+<p>The same rules apply to our definitions of <code>Day</code> and <code>Bool</code>.
 The annotations we used for them are analogous to the <code>Nat.zero</code> constructor, indicating that they do not receive any arguments.</p>
 <p>These three conditions demonstrate the power of inductive declarations. They imply that the expression <code>Nat.zero</code>, the expression <code>(Nat.succ Nat.zero)</code>, the expression <code>(Nat.succ (Nat.succ Nat.zero))</code> and so on, are of the <code>Nat</code> set, while other expressions such as <code>Bool.true</code>, <code>(Andb Bool.true Bool.false)</code>, and <code>(Nat.succ (Nat.succ Bool.false))</code> are not.</p>
 <p>We can write simple functions using <em>pattern matching</em> on natural numbers in the same way we did above - for example, the predecessor function:</p>
@@ -530,23 +530,23 @@ MinusTwo (Nat.succ (Nat.succ k)) = k</code></pre>
 <p>To avoid having to write a sequence of <code>Nat.succ</code> every time you want a <code>Nat</code>, you can use the <code>n</code> suffix at the end of any number, for example o <code>5n</code>, which takes a number written in the primitive type <code>U60</code> plus the <code>n</code> suffix and returns the corresponding <code>Nat</code>.
 {...}</p>
 <!-- TODO -->
-<pre><code class="language-rust ignore">Test : Equal Nat 6n (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))
-Test = Equal.refl</code></pre>
+<pre><code class="language-rust ignore">Test : Equal/ Nat 6n (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))
+Test = Equal/refl</code></pre>
 <!-- TODO conferir q eu não estou delirando nesse parágrafo -->
 <p>The <code>Nat.succ</code> constructor has type <code>Nat -&gt; Nat</code>, as do the functions <code>MinusTwo</code> and <code>Pred</code>. They are all things that, when applied to a <code>Nat</code>, return a <code>Nat</code>. The essential difference between <code>Nat.succ</code> and the other two, however, is that functions come with reduction rules - for example, <code>Pred (Nat.succ Nat.zero)</code> is reducible to <code>Nat.zero</code> - while <code>Nat.succ</code> does not. Although it is a function applicable to an argument, it does not compute anything.</p>
 <p>For most number function definitions, <em>pattern matching</em> alone is not enough: we will also need recursion. For example, to check whether a number <code>n</code> is even, we can recursively check whether <code>n-2</code> is even.</p>
-<pre><code class="language-rust ignore">Evenb (n: Nat) : Bool
-Evenb  Nat.zero               = Bool.true
-Evenb (Nat.succ  Nat.zero)    = Bool.false
+<pre><code class="language-rust ignore">Evenb (n: Nat) : Bool/
+Evenb  Nat.zero               = Bool/true
+Evenb (Nat.succ  Nat.zero)    = Bool/false
 Evenb (Nat.succ (Nat.succ k)) = Evenb k</code></pre>
 <p>We can define O<code>ddb</code> (a function to check if a number is odd) with a similar recursive declaration, but we also have a simpler and somewhat easier to work with definition:</p>
-<pre><code class="language-rust ignore">Oddb (n: Nat) : Bool
+<pre><code class="language-rust ignore">Oddb (n: Nat) : Bool/
 Oddb n = Notb (Evenb n)</code></pre>
-<pre><code class="language-rust ignore">TestOddb1 : Equal Bool (Oddb 1n) Bool.true
-TestOddb1 = Equal.refl
+<pre><code class="language-rust ignore">TestOddb1 : Equal/ Bool/ (Oddb 1n) Bool/true
+TestOddb1 = Equal/refl
 
-TestOddb2 : Equal Bool (Oddb 4n) Bool.false
-TestOddb2 = Equal.refl</code></pre>
+TestOddb2 : Equal/ Bool/ (Oddb 4n) Bool/false
+TestOddb2 = Equal/refl</code></pre>
 <p>Naturally, we can also define functions with multiple arguments by recursion.</p>
 <pre><code class="language-rust ignore">Plus (n: Nat) (m: Nat) : Nat
 Plus  Nat.zero    m = m
@@ -571,8 +571,8 @@ by the first rule of Plus
 <pre><code class="language-rust ignore">Mult (n: Nat) (m: Nat) : Nat
 Mult  Nat.zero    m = Nat.zero
 Mult (Nat.succ k) m = Plus m (Mult k m)</code></pre>
-<pre><code class="language-rust ignore">TestMult1 : Equal Nat (Mult 3n 3n) 9n
-TestMult1 = Equal.refl</code></pre>
+<pre><code class="language-rust ignore">TestMult1 : Equal/ Nat (Mult 3n 3n) 9n
+TestMult1 = Equal/refl</code></pre>
 <p>You can also use <em>pattern matching</em> on two expressions at the same time:</p>
 <pre><code class="language-rust ignore">Minus (n: Nat) (m: Nat) : Nat
 Minus  Nat.zero     m           = Nat.zero
@@ -600,58 +600,58 @@ f(x)=\begin{cases}x&amp;(x = 1)\\x f(x-1)&amp;(x\gt 1)\end{cases} , x\in \Bbb{N}
 <p>Translate the factorial function into Kind2:</p>
 <pre><code class="language-rust ignore">Factorial (n: Nat) : Nat
 Factorial n = ?</code></pre>
-<pre><code class="language-rust ignore">TestFactorial1 : Equal Nat (Factorial 3n ) 6n
+<pre><code class="language-rust ignore">TestFactorial1 : Equal/ Nat (Factorial 3n ) 6n
 TestFactorial1 = ?
 
-TestFactorial2 : Equal Nat (Factorial 5n) 120n
+TestFactorial2 : Equal/ Nat (Factorial 5n) 120n
 TestFactorial2 = ?</code></pre>
 <p>The <code>Eql</code> function tests equality between Naturals, returning a boolean.</p>
-<pre><code class="language-rust ignore">Eql (n: Nat) (m: Nat) : Bool
-Eql  Nat.zero     Nat.zero    = Bool.true
-Eql  Nat.zero    (Nat.succ j) = Bool.false
-Eql (Nat.succ k)  Nat.zero    = Bool.false
+<pre><code class="language-rust ignore">Eql (n: Nat) (m: Nat) : Bool/
+Eql  Nat.zero     Nat.zero    = Bool/true
+Eql  Nat.zero    (Nat.succ j) = Bool/false
+Eql (Nat.succ k)  Nat.zero    = Bool/false
 Eql (Nat.succ k) (Nat.succ j) = Eql k j</code></pre>
 <p>The<code>Lte</code> function tests if the first argument is less than or equal to the second, returning a boolean.</p>
-<pre><code class="language-rust ignore">Lte (n: Nat) (m: Nat) : Bool
-Lte  Nat.zero     m           = Bool.true
-Lte (Nat.succ k)  Nat.zero    = Bool.false
+<pre><code class="language-rust ignore">Lte (n: Nat) (m: Nat) : Bool/
+Lte  Nat.zero     m           = Bool/true
+Lte (Nat.succ k)  Nat.zero    = Bool/false
 Lte (Nat.succ k) (Nat.succ j) = Lte k j</code></pre>
-<pre><code class="language-rust ignore">TestLte1 : Equal Bool (Lte 2n 2n) Bool.true
-TestLte1 = Equal.refl
+<pre><code class="language-rust ignore">TestLte1 : Equal/ Bool/ (Lte 2n 2n) Bool/true
+TestLte1 = Equal/refl
 
-TestLte2 : Equal Bool (Lte 2n 4n) Bool.true
-TestLte2 = Equal.refl
+TestLte2 : Equal/ Bool/ (Lte 2n 4n) Bool/true
+TestLte2 = Equal/refl
 
-TestLte3 : Equal Bool (Lte 4n 2n) Bool.false
-TestLte3 = Equal.refl</code></pre>
+TestLte3 : Equal/ Bool/ (Lte 4n 2n) Bool/false
+TestLte3 = Equal/refl</code></pre>
 <h4 id="blt_nat"><a class="header" href="#blt_nat">Blt_nat</a></h4>
 <p>The <code>Blt_nat</code>function tests the &quot;less than&quot; relationship in natural numbers.
 Instead of creating a new recursive function, define it using previously defined functions.</p>
-<pre><code class="language-rust ignore">Blt_nat (n: Nat) (m: Nat) : Bool
+<pre><code class="language-rust ignore">Blt_nat (n: Nat) (m: Nat) : Bool/
 Blt_nat n m = ?</code></pre>
-<pre><code class="language-rust ignore">Test_blt_nat_1 : Equal Bool (Blt_nat 2n 2n) Bool.false
+<pre><code class="language-rust ignore">Test_blt_nat_1 : Equal/ Bool/ (Blt_nat 2n 2n) Bool/false
 Test_blt_nat_1 = ?
 
-Test_blt_nat_2 : Equal Bool (Blt_nat 2n 4n) Bool.true
+Test_blt_nat_2 : Equal/ Bool/ (Blt_nat 2n 4n) Bool/true
 Test_blt_nat_2 = ?
 
-Test_blt_nat_3 : Equal Bool (Blt_nat 4n 2n) Bool.false
+Test_blt_nat_3 : Equal/ Bool/ (Blt_nat 4n 2n) Bool/false
 Test_blt_nat_3 = ?</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="proof-by-simplification"><a class="header" href="#proof-by-simplification">Proof by Simplification</a></h2>
 <p>Now that we have defined some data types and functions, let's start proving properties of their behaviors. In fact, we have already been doing this: each function in the previous sections that starts with <code>Test</code> makes a precise assertion about the behavior of some function for specific inputs. The proofs of these assertions were always the same: use <code>Equal.refl</code> to check that both sides are indeed identical.</p>
 <p>The same type of &quot;proof by simplification&quot; can be used to prove more interesting properties. For example, the fact that <code>Nat.zero</code> is a &quot;neutral element&quot; on the left-hand side of addition can be proven simply by observing that <code>Plus Nat.zero n</code> reduces to <code>n</code>, regardless of what <code>n</code> is, a fact that can be read directly from the definition of <code>Plus</code>.</p>
-<pre><code class="language-rust ignore">Plus_Z_n (n: Nat) : Equal Nat (Plus Nat.zero n) n
-Plus_Z_n n = Equal.refl</code></pre>
+<pre><code class="language-rust ignore">Plus_Z_n (n: Nat) : Equal/ Nat (Plus Nat.zero n) n
+Plus_Z_n n = Equal/refl</code></pre>
 <p>Other similar theorems can be proven in a similar way.</p>
-<pre><code class="language-rust ignore">Plus_1_l (n: Nat) : Equal Nat (Plus (Nat.succ Nat.zero) n) (Nat.succ n)
-Plus_1_l n = Equal.refl
+<pre><code class="language-rust ignore">Plus_1_l (n: Nat) : Equal/ Nat (Plus (Nat.succ Nat.zero) n) (Nat.succ n)
+Plus_1_l n = Equal/refl
 
-Mult_0_l (n: Nat) : Equal Nat (Mult Nat.zero n) Nat.zero
-Mult_0_l n = Equal.refl </code></pre>
+Mult_0_l (n: Nat) : Equal/ Nat (Mult Nat.zero n) Nat.zero
+Mult_0_l n = Equal/refl </code></pre>
 <p>The <code>_l</code> indicates that the proof involves the value on the left-hand side. For example: the proof of adding 1 on the left-hand side <code>(Plus_1_l)</code> or the proof of multiplying by zero on the left-hand side <code>(Mult_0_l)</code>.</p>
 <p>Although simplification is powerful enough to prove some general facts, there are several statements that cannot be demonstrated with simplification alone. For example, we cannot use it to prove that <code>Nat.zero</code> is a neutral element for addition on the right-hand side.</p>
-<pre><code class="language-rust ignore">Plus_n_Z (n: Nat) : Equal Nat n (Plus n Nat.zero)
-Plus_n_Z n = Equal.refl</code></pre>
+<pre><code class="language-rust ignore">Plus_n_Z (n: Nat) : Equal/ Nat n (Plus n Nat.zero)
+Plus_n_Z n = Equal/refl</code></pre>
 <pre><code class="language-diff">- ERROR Type mismatch  
 
    • Got      : Equal Nat n n
@@ -669,7 +669,7 @@ Plus_n_Z n = Equal.refl</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="proof-by-application"><a class="header" href="#proof-by-application">Proof by Application</a></h2>
 <p>Our first tool for proving non-trivial theorems will be applying functions to both sides of an equality. For this, we will use the function <code>Equal.apply</code>, which takes an equality (<code>Equal</code>) and a function, and applies this function to both sides of the equality, generating a new equality.</p>
 <p>For example:</p>
-<pre><code class="language-rust ignore">Example_apply (n: Nat) (m: Nat) (e: Equal Nat m n) : Equal Nat (Nat.succ m) (Nat.succ n)
+<pre><code class="language-rust ignore">Example_apply (n: Nat) (m: Nat) (e: Equal/ Nat m n) : Equal/ Nat (Nat.succ m) (Nat.succ n)
 Example_apply n m e = ?</code></pre>
 <p>What do we have here? We have a proof that takes another proof/equality as argument. This means that we will carry out our proof assuming that the proof given as argument is also true. So, reading the statement of the proof, we have: &quot;Given two naturals, <code>m</code> and <code>n</code>, and a proof that they are equal, prove that <code>Nat.succ m</code> and <code>Nat.succ n</code> are also equal&quot;.</p>
 <p>We learned in our math classes that applying a function to both sides of an equality preserves the equality (<code>x/2 = 3 -&gt; 2x/2 = 23</code>), and we can see that to prove what we want, we need to apply the function <code>Nat.succ</code> to both sides of <code>e</code>, using <code>Equal.apply</code>.</p>
@@ -704,26 +704,26 @@ Example_apply n m e = ?</code></pre>
       ┬
       └Here!
 </code></pre>
-<p>As <code>e_apply</code> is an equality of type <code>Equal Nat (Nat.succ m) (Nat.succ n)</code>, the proof we are looking for is simply to return it, and we will have concluded our proof.</p>
-<pre><code class="language-rust ignore">Example_apply (n: Nat) (m: Nat) (e: Equal Nat m n) : Equal Nat (Nat.succ m) (Nat.succ n)
+<p>As <code>e_apply</code> is an equality of type <code>Equal/ Nat (Nat.succ m) (Nat.succ n)</code>, the proof we are looking for is simply to return it, and we will have concluded our proof.</p>
+<pre><code class="language-rust ignore">Example_apply (n: Nat) (m: Nat) (e: Equal/ Nat m n) : Equal/ Nat (Nat.succ m) (Nat.succ n)
 Example_apply n m e =
-  let e_apply = Equal.apply (x =&gt; Nat.succ x) e
+  let e_apply = Equal/apply (x =&gt; Nat.succ x) e
   e_apply</code></pre>
 <pre><code class="language-terminal">  All terms checked.
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="proof-by-case-analysis"><a class="header" href="#proof-by-case-analysis">Proof by Case Analysis</a></h2>
 <p>The next tool for formal proofs will be case analysis, which means using <em>pattern matching</em> in the proof. For example, let's prove that the logical AND of anything and False is always False:</p>
-<pre><code class="language-rust ignore">Example_case_analysis (b: Bool) : Equal Bool (Andb b1 Bool.false) Bool.false
+<pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b1 Bool/false) Bool/false
 Example_case_analysis b = ?</code></pre>
-<p>Although it may seem like a proof that could be solved simply with <code>Equal.refl</code>, it's not the case. This is because the <code>Andb</code> function pattern matches on the first argument, and we don't have its value in the proof, so it remains &quot;stuck&quot;.</p>
-<p>To give a value to it and show that the proof is correct for both <code>Bool</code> values, we <em>pattern match</em> in the proof, creating two different proofs: one for when <code>b</code> is <code>Bool.true</code> and one for when it's <code>Bool.false</code>.</p>
-<pre><code class="language-rust ignore">Example_case_analysis (b: Bool) : Equal Bool (Andb b Bool.false) Bool.false
-Example_case_analysis Bool.true  = ?
-Example_case_analysis Bool.false = ?</code></pre>
-<p>And both of these proofs are directly solvable with <code>Equal.refl</code>, since the <em>type checker</em> can reduce both of them to <code>Equal Bool.false Bool.false</code> directly.</p>
-<pre><code class="language-rust ignore">Example_case_analysis (b: Bool) : Equal Bool (Andb b Bool.false) Bool.false
-Example_case_analysis Bool.true  = Equal.refl
-Example_case_analysis Bool.false = Equal.refl</code></pre>
+<p>Although it may seem like a proof that could be solved simply with <code>Equal/refl</code>, it's not the case. This is because the <code>Andb</code> function pattern matches on the first argument, and we don't have its value in the proof, so it remains &quot;stuck&quot;.</p>
+<p>To give a value to it and show that the proof is correct for both <code>Bool</code> values, we <em>pattern match</em> in the proof, creating two different proofs: one for when <code>b</code> is <code>Bool/true</code> and one for when it's <code>Bool/false</code>.</p>
+<pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b Bool/false) Bool/false
+Example_case_analysis Bool/true  = ?
+Example_case_analysis Bool/false = ?</code></pre>
+<p>And both of these proofs are directly solvable with <code>Equal/refl</code>, since the <em>type checker</em> can reduce both of them to <code>Equal Bool.false Bool.false</code> directly.</p>
+<pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b Bool/false) Bool/false
+Example_case_analysis Bool/true  = Equal/refl
+Example_case_analysis Bool/false = Equal/refl</code></pre>
 <!-- TODO Reescrita no Kind2 é uma caixa de minhocas por si só,
 talvez colocar mais pro final do capítulo,
 ao talvez até colocar depois desse capítulo -->

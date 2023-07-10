@@ -170,17 +170,17 @@
                     <main>
                         <h2 id="proof-by-case-analysis"><a class="header" href="#proof-by-case-analysis">Proof by Case Analysis</a></h2>
 <p>The next tool for formal proofs will be case analysis, which means using <em>pattern matching</em> in the proof. For example, let's prove that the logical AND of anything and False is always False:</p>
-<pre><code class="language-rust ignore">Example_case_analysis (b: Bool) : Equal Bool (Andb b1 Bool.false) Bool.false
+<pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b1 Bool/false) Bool/false
 Example_case_analysis b = ?</code></pre>
-<p>Although it may seem like a proof that could be solved simply with <code>Equal.refl</code>, it's not the case. This is because the <code>Andb</code> function pattern matches on the first argument, and we don't have its value in the proof, so it remains &quot;stuck&quot;.</p>
-<p>To give a value to it and show that the proof is correct for both <code>Bool</code> values, we <em>pattern match</em> in the proof, creating two different proofs: one for when <code>b</code> is <code>Bool.true</code> and one for when it's <code>Bool.false</code>.</p>
-<pre><code class="language-rust ignore">Example_case_analysis (b: Bool) : Equal Bool (Andb b Bool.false) Bool.false
-Example_case_analysis Bool.true  = ?
-Example_case_analysis Bool.false = ?</code></pre>
-<p>And both of these proofs are directly solvable with <code>Equal.refl</code>, since the <em>type checker</em> can reduce both of them to <code>Equal Bool.false Bool.false</code> directly.</p>
-<pre><code class="language-rust ignore">Example_case_analysis (b: Bool) : Equal Bool (Andb b Bool.false) Bool.false
-Example_case_analysis Bool.true  = Equal.refl
-Example_case_analysis Bool.false = Equal.refl</code></pre>
+<p>Although it may seem like a proof that could be solved simply with <code>Equal/refl</code>, it's not the case. This is because the <code>Andb</code> function pattern matches on the first argument, and we don't have its value in the proof, so it remains &quot;stuck&quot;.</p>
+<p>To give a value to it and show that the proof is correct for both <code>Bool</code> values, we <em>pattern match</em> in the proof, creating two different proofs: one for when <code>b</code> is <code>Bool/true</code> and one for when it's <code>Bool/false</code>.</p>
+<pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b Bool/false) Bool/false
+Example_case_analysis Bool/true  = ?
+Example_case_analysis Bool/false = ?</code></pre>
+<p>And both of these proofs are directly solvable with <code>Equal/refl</code>, since the <em>type checker</em> can reduce both of them to <code>Equal Bool.false Bool.false</code> directly.</p>
+<pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b Bool/false) Bool/false
+Example_case_analysis Bool/true  = Equal/refl
+Example_case_analysis Bool/false = Equal/refl</code></pre>
 <!-- TODO Reescrita no Kind2 é uma caixa de minhocas por si só,
 talvez colocar mais pro final do capítulo,
 ao talvez até colocar depois desse capítulo -->

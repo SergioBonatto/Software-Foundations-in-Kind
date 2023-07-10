@@ -170,15 +170,15 @@
                     <main>
                         <h2 id="proof-by-rewriting"><a class="header" href="#proof-by-rewriting">Proof by Rewriting</a></h2>
 <p>This theorem is a bit more interesting than the previous ones:</p>
-<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal Nat n m) : Equal Nat (Plus n n) (Plus m m)</code></pre>
+<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal/ Nat n m) : Equal/ Nat (Plus n n) (Plus m m)</code></pre>
 <p>As shown before, this is a proof that has another proof or hypothesis within its arguments: in this case, we have <code>Equal n m</code> - meaning, <code>n</code> and <code>m</code> are equal.</p>
 <p>Since n and m are arbitrary numbers, we can't just use simplification to prove the theorem. Instead, we observe that, since we assume <code>Equal n m</code>, we could substitute <code>n</code> for <code>m</code> in the goal and both sides will be equal. The function we use to perform this substitution is <code>Equal.rewrite</code>.</p>
 <!-- TODO revisar esse parágrafo -->
 <p>Since we can't rewrite directly in the goal, we use another equality and make it equal to the goal. In our case, we will use an <code>Equal.apply</code> on <code>e</code> to obtain this equality.</p>
-<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal Nat n m) : Equal Nat (Plus n n) (Plus m m)
+<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal/ Nat n m) : Equal/ Nat (Plus n n) (Plus m m)
 
 Plus_id_example n m e =
-  let app = Equal.apply (k =&gt; Plus k n) e
+  let app = Equal/apply (k =&gt; Plus k n) e
   ? </code></pre>
 <pre><code class="language-diff">+ INFO  Inspection.
 
@@ -197,10 +197,10 @@ Plus_id_example n m e =
       └Here!
 </code></pre>
 <p>This <code>app</code> will be of type <code>Equal (Plus n n) (Plus m n)</code>, as shown in the comment. With this done, we need to replace <code>n</code> with <code>m</code> on the right-hand side of the equality, and for that we use rewrite:</p>
-<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal Nat n m) : Equal Nat (Plus n n) (Plus m m)
+<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal/ Nat n m) : Equal/ Nat (Plus n n) (Plus m m)
 Plus_id_example n m e =
-  let app = Equal.apply (k =&gt; Plus k n) e
-  let rrt = Equal.rewrite e (x =&gt; Equal (Plus n n) (Plus m x)) app
+  let app = Equal/apply (k =&gt; Plus k n) e
+  let rrt = Equal/rewrite e (x =&gt; Equal/ (Plus n n) (Plus m x)) app
   rrt</code></pre>
 <pre><code class="language-diff">+ INFO  Inspection.
 
@@ -218,7 +218,7 @@ Plus_id_example n m e =
 <p>The return value of the <code>Equal.rewrite</code> operation will be the proof we need, so we just return the result directly from the function.</p>
 <h4 id="plus_id_exercise"><a class="header" href="#plus_id_exercise">Plus_id_exercise</a></h4>
 <p>Prove that:</p>
-<pre><code class="language-rust ignore">Plus_id_exercise (n: Nat) (m: Nat) (o: Nat) (e1: Equal Nat n m) (e2: Equal Nat m o) : Equal Nat (Plus n m) (Plus m o)
+<pre><code class="language-rust ignore">Plus_id_exercise (n: Nat) (m: Nat) (o: Nat) (e1: Equal/ Nat n m) (e2: Equal/ Nat m o) : Equal/ Nat (Plus n m) (Plus m o)
 Plus_id_exercise n m o e1 e2 = ?</code></pre>
 
                     </main>

@@ -729,15 +729,15 @@ talvez colocar mais pro final do capítulo,
 ao talvez até colocar depois desse capítulo -->
 <div style="break-before: page; page-break-before: always;"></div><h2 id="proof-by-rewriting"><a class="header" href="#proof-by-rewriting">Proof by Rewriting</a></h2>
 <p>This theorem is a bit more interesting than the previous ones:</p>
-<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal Nat n m) : Equal Nat (Plus n n) (Plus m m)</code></pre>
+<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal/ Nat n m) : Equal/ Nat (Plus n n) (Plus m m)</code></pre>
 <p>As shown before, this is a proof that has another proof or hypothesis within its arguments: in this case, we have <code>Equal n m</code> - meaning, <code>n</code> and <code>m</code> are equal.</p>
 <p>Since n and m are arbitrary numbers, we can't just use simplification to prove the theorem. Instead, we observe that, since we assume <code>Equal n m</code>, we could substitute <code>n</code> for <code>m</code> in the goal and both sides will be equal. The function we use to perform this substitution is <code>Equal.rewrite</code>.</p>
 <!-- TODO revisar esse parágrafo -->
 <p>Since we can't rewrite directly in the goal, we use another equality and make it equal to the goal. In our case, we will use an <code>Equal.apply</code> on <code>e</code> to obtain this equality.</p>
-<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal Nat n m) : Equal Nat (Plus n n) (Plus m m)
+<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal/ Nat n m) : Equal/ Nat (Plus n n) (Plus m m)
 
 Plus_id_example n m e =
-  let app = Equal.apply (k =&gt; Plus k n) e
+  let app = Equal/apply (k =&gt; Plus k n) e
   ? </code></pre>
 <pre><code class="language-diff">+ INFO  Inspection.
 
@@ -756,10 +756,10 @@ Plus_id_example n m e =
       └Here!
 </code></pre>
 <p>This <code>app</code> will be of type <code>Equal (Plus n n) (Plus m n)</code>, as shown in the comment. With this done, we need to replace <code>n</code> with <code>m</code> on the right-hand side of the equality, and for that we use rewrite:</p>
-<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal Nat n m) : Equal Nat (Plus n n) (Plus m m)
+<pre><code class="language-rust ignore">Plus_id_example (n: Nat) (m: Nat) (e: Equal/ Nat n m) : Equal/ Nat (Plus n n) (Plus m m)
 Plus_id_example n m e =
-  let app = Equal.apply (k =&gt; Plus k n) e
-  let rrt = Equal.rewrite e (x =&gt; Equal (Plus n n) (Plus m x)) app
+  let app = Equal/apply (k =&gt; Plus k n) e
+  let rrt = Equal/rewrite e (x =&gt; Equal/ (Plus n n) (Plus m x)) app
   rrt</code></pre>
 <pre><code class="language-diff">+ INFO  Inspection.
 
@@ -777,16 +777,16 @@ Plus_id_example n m e =
 <p>The return value of the <code>Equal.rewrite</code> operation will be the proof we need, so we just return the result directly from the function.</p>
 <h4 id="plus_id_exercise"><a class="header" href="#plus_id_exercise">Plus_id_exercise</a></h4>
 <p>Prove that:</p>
-<pre><code class="language-rust ignore">Plus_id_exercise (n: Nat) (m: Nat) (o: Nat) (e1: Equal Nat n m) (e2: Equal Nat m o) : Equal Nat (Plus n m) (Plus m o)
+<pre><code class="language-rust ignore">Plus_id_exercise (n: Nat) (m: Nat) (o: Nat) (e1: Equal/ Nat n m) (e2: Equal/ Nat m o) : Equal/ Nat (Plus n m) (Plus m o)
 Plus_id_exercise n m o e1 e2 = ?</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="equalchain-and-equalmirror"><a class="header" href="#equalchain-and-equalmirror">Equal.chain and Equal.mirror</a></h2>
 <p>In this section we will not discuss any inherently new tool, but rather some proof utilities to make use of the previous tools easier.</p>
 <p>Consider the example:</p>
-<pre><code class="language-rust ignore">Example_mirror (a: Nat) (b: Nat) (e: Equal Nat a b) : Equal Nat b a</code></pre>
-<p>It seems like a trivial example. If <code>a</code> is equal to <code>b</code>, then <code>b</code> is equal to <code>a</code>, right? Although correct, the type checker of Kind does not recognize this equality, because for it, the order is important. For such situations, we have the function <code>Equal.mirror</code>, which simply swaps the sides of an equality.</p>
-<pre><code class="language-rust ignore">Example_mirror (a: Nat) (b: Nat) (e: Equal Nat a b) : Equal Nat b a
+<pre><code class="language-rust ignore">Example_mirror (a: Nat) (b: Nat) (e: Equal/ Nat a b) : Equal/ Nat b a</code></pre>
+<p>It seems like a trivial example. If <code>a</code> is equal to <code>b</code>, then <code>b</code> is equal to <code>a</code>, right? Although correct, the type checker of Kind does not recognize this equality, because for it, the order is important. For such situations, we have the function <code>Equal/mirror</code>, which simply swaps the sides of an equality.</p>
+<pre><code class="language-rust ignore">Example_mirror (a: Nat) (b: Nat) (e: Equal/ Nat a b) : Equal/ Nat b a
 Example_mirror a b e = 
-   let mir = Equal.mirror e
+   let mir = Equal/mirror e
    mir</code></pre>
 <pre><code class="language-diff">+ INFO  Inspection.
 
@@ -799,13 +799,13 @@ Example_mirror a b e =
    •   mir : Equal Nat b a 
    •   mir = Equal.mirror Nat a b e
 </code></pre>
-<p>Although it may not seem very useful at the moment, this operation is very useful for our second utility: <code>Equal.chain</code>. <code>Equal.chain</code> is a specific case of <code>Equal.rewrite</code>, in which you rewrite an entire side of an equality using another.</p>
-<pre><code class="language-rust ignore">Example_chain (a: Nat) (b: Nat) (c: Nat) (e1: Equal Nat b (Plus a a)) (e2 : Equal Nat c (Plus a a)) : Equal Nat b c</code></pre>
+<p>Although it may not seem very useful at the moment, this operation is very useful for our second utility: <code>Equal/chain</code>. <code>Equal/chain</code> is a specific case of <code>Equal/rewrite</code>, in which you rewrite an entire side of an equality using another.</p>
+<pre><code class="language-rust ignore">Example_chain (a: Nat) (b: Nat) (c: Nat) (e1: Equal/ Nat b (Plus a a)) (e2 : Equal/ Nat c (Plus a a)) : Equal/ Nat b c</code></pre>
 <p>Since we already know <code>Equal.rewrite</code>, we could use it to solve this theorem, but instead we will use <code>Equal.chain</code>.<code>Equal.chain</code> works by &quot;chaining&quot; two equalities that have the same expression on the right side of the first equality and on the left side of the second, &quot;gluing&quot; these equalities together by the common expression, generating a new equality with the other two expressions (<code>Equal.chain (a = b) (b = c) = (a = c)</code>). For example, in our example, the right side of the two equalities is equal. If we use <code>Equal.mirror</code> on one of them, we can then use <code>Equal.chain</code> on them:</p>
-<pre><code class="language-rust ignore">Example_chain (a: Nat) (b: Nat) (c: Nat) (e1: Equal Nat b (Plus a a)) (e2 : Equal Nat c (Plus a a)) : Equal Nat b c
+<pre><code class="language-rust ignore">Example_chain (a: Nat) (b: Nat) (c: Nat) (e1: Equal/ Nat b (Plus a a)) (e2 : Equal/ Nat c (Plus a a)) : Equal/ Nat b c
 Example_chain a b c e1 e2 =
-  let e3 = Equal.mirror e2
-  let chn = Equal.chain e1 e3
+  let e3 = Equal/mirror e2
+  let chn = Equal/chain e1 e3
 </code></pre>
 <pre><code class="language-diff">+ INFO  Inspection.
 
@@ -825,12 +825,12 @@ Example_chain a b c e1 e2 =
 <div style="break-before: page; page-break-before: always;"></div><h2 id="more-exercises"><a class="header" href="#more-exercises">More Exercises</a></h2>
 <h4 id="boolean_functions"><a class="header" href="#boolean_functions">Boolean_functions</a></h4>
 <p>Use the knowledge taught so far to solve the theorem:</p>
-<pre><code class="language-rust ignore">Identity_fn_applied_twice (f: Bool -&gt; Bool) (e: (x: Bool) -&gt; Equal Bool (f x) x) (b : Bool) : Equal Bool (f (f b)) b
+<pre><code class="language-rust ignore">Identity_fn_applied_twice (f: Bool/ -&gt; Bool/) (e: (x: Bool/) -&gt; Equal/ Bool/ (f x) x) (b : Bool/) : Equal/ Bool/ (f (f b)) b
 Identity_fn_applied_twice f e b = ?</code></pre>
 <p>Then, solve the <code>negation_fn_applied_twice</code> theorem, which is the same as the previous one, but changing the hypothesis to <code>Equal (f x) (Not x)</code></p>
 <h4 id="andb_eq_orb"><a class="header" href="#andb_eq_orb">Andb_eq_orb</a></h4>
 <p>Prove the following theorem (Remember that you can prove intermediate theorems separately):</p>
-<pre><code class="language-rust ignore">Andb_eq_orb (b: Bool) (c: Bool) (e: Equal Bool (Andb b c) (Orb b c)) : Equal Bool b c
+<pre><code class="language-rust ignore">Andb_eq_orb (b: Bool/) (c: Bool/) (e: Equal/ Bool/ (Andb b c) (Orb b c)) : Equal/ Bool/ b c
 Andb_eq_orb b c prf = ?</code></pre>
 <h4 id="binary"><a class="header" href="#binary">Binary</a></h4>
 <p>Consider a different representation of natural numbers using a binary system instead of unary. That is, instead of having only zero or one successor of a number, we can have:</p>

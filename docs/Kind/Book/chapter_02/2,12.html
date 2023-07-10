@@ -171,12 +171,12 @@
                         <h2 id="more-exercises"><a class="header" href="#more-exercises">More Exercises</a></h2>
 <h4 id="boolean_functions"><a class="header" href="#boolean_functions">Boolean_functions</a></h4>
 <p>Use the knowledge taught so far to solve the theorem:</p>
-<pre><code class="language-rust ignore">Identity_fn_applied_twice (f: Bool -&gt; Bool) (e: (x: Bool) -&gt; Equal Bool (f x) x) (b : Bool) : Equal Bool (f (f b)) b
+<pre><code class="language-rust ignore">Identity_fn_applied_twice (f: Bool/ -&gt; Bool/) (e: (x: Bool/) -&gt; Equal/ Bool/ (f x) x) (b : Bool/) : Equal/ Bool/ (f (f b)) b
 Identity_fn_applied_twice f e b = ?</code></pre>
 <p>Then, solve the <code>negation_fn_applied_twice</code> theorem, which is the same as the previous one, but changing the hypothesis to <code>Equal (f x) (Not x)</code></p>
 <h4 id="andb_eq_orb"><a class="header" href="#andb_eq_orb">Andb_eq_orb</a></h4>
 <p>Prove the following theorem (Remember that you can prove intermediate theorems separately):</p>
-<pre><code class="language-rust ignore">Andb_eq_orb (b: Bool) (c: Bool) (e: Equal Bool (Andb b c) (Orb b c)) : Equal Bool b c
+<pre><code class="language-rust ignore">Andb_eq_orb (b: Bool/) (c: Bool/) (e: Equal/ Bool/ (Andb b c) (Orb b c)) : Equal/ Bool/ b c
 Andb_eq_orb b c prf = ?</code></pre>
 <h4 id="binary"><a class="header" href="#binary">Binary</a></h4>
 <p>Consider a different representation of natural numbers using a binary system instead of unary. That is, instead of having only zero or one successor of a number, we can have:</p>

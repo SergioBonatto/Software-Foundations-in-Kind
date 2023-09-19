@@ -35,7 +35,7 @@ Main {
 
 With the code ready, you should use Type Checking to check if everything is in order. The type checker is still unknown in this guide, but it will be explained in more detail later. For now, just understand it as a checker that verifies if the file is correctly "typed".
 
-To check the type of a Kind file, simply use the command `kind2 check nomeDoArquivo.kind2`. For the hello_world.kind2 file, it would be:
+To check the type of a Kind file, simply use the command `kind2 check fileName.kind2`. For the hello_world.kind2 file, it would be:
 
 ```
 kind2 check hello_world.kind2
@@ -51,7 +51,7 @@ Is the type checking correct? Then let's run the code.
 
 ### Running the code
 
-To run a file in Kind, use the command `kind2 run nomeDoArquivo.kind2`. It should look like this:
+To run a file in Kind, use the command `kind2 run fileName.kind2`. It should look like this:
 
 ```
 kind2 run hello_world.kind2

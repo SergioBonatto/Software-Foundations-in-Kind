@@ -3,11 +3,11 @@
 Translated from [Software Foundations in Idris](https://idris-hackers.github.io/software-foundations/pdf/sf-idris-2018.pdf) to the `Kind` language.
 ## Book
 
-<a href="https://higherorderco.github.io/Software-Foundations-In-Kind/docs/Kind/index.html" target="_blank">Kind - Book EN</a>
+<a href="https://sergiobonatto.github.io/Software-Foundations-In-Kind/docs/Kind/index.html" target="_blank">Kind - Book EN</a>
 
-<a href="https://higherorderco.github.io/Software-Foundations-In-Kind/docs/Kind-ptBR/index.html" target="_blank">Kind - Book pt-BR</a>
+<a href="https://sergiobonatto.github.io/Software-Foundations-In-Kind/docs/Kind-ptBR/index.html" target="_blank">Kind - Book pt-BR</a>
 
-<a href="https://higherorderco.github.io/Software-Foundations-In-Kind/docs/Lang/index.html" target="_blank">Kind - Lang EN</a>
+<a href="https://sergiobonatto.github.io/Software-Foundations-In-Kind/docs/Lang/index.html" target="_blank">Kind - Lang EN</a>
 
 ## Running locally
 

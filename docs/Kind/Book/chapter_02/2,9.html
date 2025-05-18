@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -7,10 +7,10 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../../favicon.svg">
         <link rel="shortcut icon" href="../../favicon.png">
@@ -24,28 +24,31 @@
         <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../../highlight.css">
-        <link rel="stylesheet" href="../../tomorrow-night.css">
-        <link rel="stylesheet" href="../../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "../../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -59,72 +62,58 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
-            var sidebar = null;
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">User Guide</li><li class="chapter-item expanded "><a href="../../guide/Started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../guide/About.html"><strong aria-hidden="true">1.1.</strong> About Kind</a></li><li class="chapter-item expanded "><a href="../../guide/Installation.html"><strong aria-hidden="true">1.2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../../cli/World.html"><strong aria-hidden="true">1.3.</strong> Hello World!</a></li><li class="chapter-item expanded "><a href="../../cli/kind.html"><strong aria-hidden="true">1.4.</strong> Hello Kind!</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Book</li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,1.html"><strong aria-hidden="true">2.</strong> Basics: Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,2.html"><strong aria-hidden="true">2.1.</strong> Enumerated Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,2,1.html"><strong aria-hidden="true">2.1.1.</strong> Days of the Week</a></li></ol></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,3.html"><strong aria-hidden="true">2.2.</strong> Booleans</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,4.html"><strong aria-hidden="true">2.3.</strong> Function Types</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,5.html"><strong aria-hidden="true">2.4.</strong> Modules</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,6.html"><strong aria-hidden="true">2.5.</strong> Numbers</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,7.html"><strong aria-hidden="true">2.6.</strong> Proof by Simplification</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,8.html"><strong aria-hidden="true">2.7.</strong> Proof by Application</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,9.html" class="active"><strong aria-hidden="true">2.8.</strong> Proof by Case Analysis</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,10.html"><strong aria-hidden="true">2.9.</strong> Proof by Rewriting</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,11.html"><strong aria-hidden="true">2.10.</strong> Equal.chain and Equal.mirror</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_02/2,12.html"><strong aria-hidden="true">2.11.</strong> More Exercises</a></li></ol></li><li class="chapter-item expanded "><a href="../../Book/chapter_03/3.html"><strong aria-hidden="true">3.</strong> Induction: Proof by Induction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../Book/chapter_03/3,1.html"><strong aria-hidden="true">3.1.</strong> Exercises</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_03/3,2.html"><strong aria-hidden="true">3.2.</strong> More Exercises</a></li></ol></li><li class="chapter-item expanded "><a href="../../Book/chapter_04/4.html"><strong aria-hidden="true">4.</strong> Data Structures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../Book/chapter_04/4,1.html"><strong aria-hidden="true">4.1.</strong> Lists of Numbers</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_04/4,2.html"><strong aria-hidden="true">4.2.</strong> Reasoning about Lists</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_04/4,3.html"><strong aria-hidden="true">4.3.</strong> Maybe</a></li></ol></li><li class="chapter-item expanded "><a href="../../Book/chapter_05/5.html"><strong aria-hidden="true">5.</strong> Polymorphism</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../Book/chapter_05/5,1.html"><strong aria-hidden="true">5.1.</strong> Functions as Data</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_05/5,2.html"><strong aria-hidden="true">5.2.</strong> Additional Exercises</a></li></ol></li><li class="chapter-item expanded "><a href="../../Book/chapter_06/6.html"><strong aria-hidden="true">6.</strong> Logic in Kind</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../Book/chapter_06/6,1.html"><strong aria-hidden="true">6.1.</strong> Logical Connectives</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_06/6,2.html"><strong aria-hidden="true">6.2.</strong> Falsehood and Negation</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_06/6,3.html"><strong aria-hidden="true">6.3.</strong> Truth, Equivalence, and Quantification</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_06/6,4.html"><strong aria-hidden="true">6.4.</strong> Programming with Propositions</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_06/6,5.html"><strong aria-hidden="true">6.5.</strong> Applying Theorems to Arguments</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_06/6,6.html"><strong aria-hidden="true">6.6.</strong> Kind vs Set Theory</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_06/6,7.html"><strong aria-hidden="true">6.7.</strong> Classical vs. Constructive Logic</a></li></ol></li><li class="chapter-item expanded "><a href="../../Book/chapter_07/7.html"><strong aria-hidden="true">7.</strong> Inductively Defined Propositions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../Book/chapter_07/7.1.html"><strong aria-hidden="true">7.1.</strong> Using Evidence in Proofs</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_07/7.2.html"><strong aria-hidden="true">7.2.</strong> Inductive Relations</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_07/7.3.html"><strong aria-hidden="true">7.3.</strong> Case Study: Regular Expressions</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_07/7.4.html"><strong aria-hidden="true">7.4.</strong> Case Study: Improving Reflection</a></li><li class="chapter-item expanded "><a href="../../Book/chapter_07/7.5.html"><strong aria-hidden="true">7.5.</strong> Additional Exercises</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../Contributors.html">Contributors</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
-
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -172,7 +161,7 @@
 <p>The next tool for formal proofs will be case analysis, which means using <em>pattern matching</em> in the proof. For example, let's prove that the logical AND of anything and False is always False:</p>
 <pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b1 Bool/false) Bool/false
 Example_case_analysis b = ?</code></pre>
-<p>Although it may seem like a proof that could be solved simply with <code>Equal/refl</code>, it's not the case. This is because the <code>Andb</code> function pattern matches on the first argument, and we don't have its value in the proof, so it remains &quot;stuck&quot;.</p>
+<p>Although it may seem like a proof that could be solved simply with <code>Equal/refl</code>, it's not the case. This is because the <code>Andb</code> function pattern matches on the first argument, and we don't have its value in the proof, so it remains "stuck".</p>
 <p>To give a value to it and show that the proof is correct for both <code>Bool</code> values, we <em>pattern match</em> in the proof, creating two different proofs: one for when <code>b</code> is <code>Bool/true</code> and one for when it's <code>Bool/false</code>.</p>
 <pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b Bool/false) Bool/false
 Example_case_analysis Bool/true  = ?
@@ -193,7 +182,7 @@ ao talvez até colocar depois desse capítulo -->
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../../Book/chapter_02/2,10.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../Book/chapter_02/2,10.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -207,13 +196,29 @@ ao talvez até colocar depois desse capítulo -->
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../../Book/chapter_02/2,10.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../Book/chapter_02/2,10.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

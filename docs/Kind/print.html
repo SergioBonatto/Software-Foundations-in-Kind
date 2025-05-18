@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title></title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -25,28 +25,31 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
     </head>
     <body>
     <div id="body-container">
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -60,72 +63,58 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
-            var sidebar = null;
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">User Guide</li><li class="chapter-item expanded "><a href="guide/Started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="guide/About.html"><strong aria-hidden="true">1.1.</strong> About Kind</a></li><li class="chapter-item expanded "><a href="guide/Installation.html"><strong aria-hidden="true">1.2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="cli/World.html"><strong aria-hidden="true">1.3.</strong> Hello World!</a></li><li class="chapter-item expanded "><a href="cli/kind.html"><strong aria-hidden="true">1.4.</strong> Hello Kind!</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Book</li><li class="chapter-item expanded "><a href="Book/chapter_02/2,1.html"><strong aria-hidden="true">2.</strong> Basics: Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Book/chapter_02/2,2.html"><strong aria-hidden="true">2.1.</strong> Enumerated Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Book/chapter_02/2,2,1.html"><strong aria-hidden="true">2.1.1.</strong> Days of the Week</a></li></ol></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,3.html"><strong aria-hidden="true">2.2.</strong> Booleans</a></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,4.html"><strong aria-hidden="true">2.3.</strong> Function Types</a></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,5.html"><strong aria-hidden="true">2.4.</strong> Modules</a></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,6.html"><strong aria-hidden="true">2.5.</strong> Numbers</a></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,7.html"><strong aria-hidden="true">2.6.</strong> Proof by Simplification</a></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,8.html"><strong aria-hidden="true">2.7.</strong> Proof by Application</a></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,9.html"><strong aria-hidden="true">2.8.</strong> Proof by Case Analysis</a></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,10.html"><strong aria-hidden="true">2.9.</strong> Proof by Rewriting</a></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,11.html"><strong aria-hidden="true">2.10.</strong> Equal.chain and Equal.mirror</a></li><li class="chapter-item expanded "><a href="Book/chapter_02/2,12.html"><strong aria-hidden="true">2.11.</strong> More Exercises</a></li></ol></li><li class="chapter-item expanded "><a href="Book/chapter_03/3.html"><strong aria-hidden="true">3.</strong> Induction: Proof by Induction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Book/chapter_03/3,1.html"><strong aria-hidden="true">3.1.</strong> Exercises</a></li><li class="chapter-item expanded "><a href="Book/chapter_03/3,2.html"><strong aria-hidden="true">3.2.</strong> More Exercises</a></li></ol></li><li class="chapter-item expanded "><a href="Book/chapter_04/4.html"><strong aria-hidden="true">4.</strong> Data Structures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Book/chapter_04/4,1.html"><strong aria-hidden="true">4.1.</strong> Lists of Numbers</a></li><li class="chapter-item expanded "><a href="Book/chapter_04/4,2.html"><strong aria-hidden="true">4.2.</strong> Reasoning about Lists</a></li><li class="chapter-item expanded "><a href="Book/chapter_04/4,3.html"><strong aria-hidden="true">4.3.</strong> Maybe</a></li></ol></li><li class="chapter-item expanded "><a href="Book/chapter_05/5.html"><strong aria-hidden="true">5.</strong> Polymorphism</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Book/chapter_05/5,1.html"><strong aria-hidden="true">5.1.</strong> Functions as Data</a></li><li class="chapter-item expanded "><a href="Book/chapter_05/5,2.html"><strong aria-hidden="true">5.2.</strong> Additional Exercises</a></li></ol></li><li class="chapter-item expanded "><a href="Book/chapter_06/6.html"><strong aria-hidden="true">6.</strong> Logic in Kind</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Book/chapter_06/6,1.html"><strong aria-hidden="true">6.1.</strong> Logical Connectives</a></li><li class="chapter-item expanded "><a href="Book/chapter_06/6,2.html"><strong aria-hidden="true">6.2.</strong> Falsehood and Negation</a></li><li class="chapter-item expanded "><a href="Book/chapter_06/6,3.html"><strong aria-hidden="true">6.3.</strong> Truth, Equivalence, and Quantification</a></li><li class="chapter-item expanded "><a href="Book/chapter_06/6,4.html"><strong aria-hidden="true">6.4.</strong> Programming with Propositions</a></li><li class="chapter-item expanded "><a href="Book/chapter_06/6,5.html"><strong aria-hidden="true">6.5.</strong> Applying Theorems to Arguments</a></li><li class="chapter-item expanded "><a href="Book/chapter_06/6,6.html"><strong aria-hidden="true">6.6.</strong> Kind vs Set Theory</a></li><li class="chapter-item expanded "><a href="Book/chapter_06/6,7.html"><strong aria-hidden="true">6.7.</strong> Classical vs. Constructive Logic</a></li></ol></li><li class="chapter-item expanded "><a href="Book/chapter_07/7.html"><strong aria-hidden="true">7.</strong> Inductively Defined Propositions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Book/chapter_07/7.1.html"><strong aria-hidden="true">7.1.</strong> Using Evidence in Proofs</a></li><li class="chapter-item expanded "><a href="Book/chapter_07/7.2.html"><strong aria-hidden="true">7.2.</strong> Inductive Relations</a></li><li class="chapter-item expanded "><a href="Book/chapter_07/7.3.html"><strong aria-hidden="true">7.3.</strong> Case Study: Regular Expressions</a></li><li class="chapter-item expanded "><a href="Book/chapter_07/7.4.html"><strong aria-hidden="true">7.4.</strong> Case Study: Improving Reflection</a></li><li class="chapter-item expanded "><a href="Book/chapter_07/7.5.html"><strong aria-hidden="true">7.5.</strong> Additional Exercises</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="Contributors.html">Contributors</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
-
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -193,7 +182,7 @@
 <p>If you're interested in learning more about programming and exploring the vast universe of Kind, then becoming a Kind programmer can be an exciting and rewarding adventure. There are many other Kind programmers out there to collaborate and learn with, making this journey even more exciting.</p>
 <p>In summary, Kind is a modern, powerful, and versatile programming language that offers many opportunities for those who want to learn and explore the vast universe of programming. If you're interested in becoming a Kind programmer, there are many resources available to help you get started, from official documentation to active communities of users and developers.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
-<p>This guide teaches you how to download and install Kind through Rust, using &quot;Cargo&quot;, a tool used to manage packages. It may be necessary to have an internet connection to proceed with this guide.</p>
+<p>This guide teaches you how to download and install Kind through Rust, using "Cargo", a tool used to manage packages. It may be necessary to have an internet connection to proceed with this guide.</p>
 <p>Firstly, install Rust using this <a href="https://www.rust-lang.org/tools/install">link</a></p>
 <ul>
 <li><em>Currently, Cargo is the only way to install Kind.</em></li>
@@ -209,7 +198,7 @@
 <pre><code>cargo +nightly install kind2
 </code></pre>
 <h3 id="cloning-the-kind-repository---method-1"><a class="header" href="#cloning-the-kind-repository---method-1">Cloning the Kind Repository - Method 1</a></h3>
-<p>Clone the Kind repository using the git command &quot;git clone&quot;, as follows:</p>
+<p>Clone the Kind repository using the git command "git clone", as follows:</p>
 <pre><code>git clone https://github.com/HigherOrderCO/Kind
 </code></pre>
 <p>After the cloning step, use the following command for installation:</p>
@@ -236,12 +225,12 @@ touch hello_world.kind2
 <p>Open the hello_world.kind2 file in your text editor, it will be empty, but don't worry. From now on, there will be some advanced concepts. Everything will make sense in the future, and pertinent concepts will be explained in due time. It is recommended that you manually type the codes, instead of copying and pasting them into your file.</p>
 <p>Let's write your first code in the hello_world.kind2 file:</p>
 <pre><code class="language-Rust">Main {
-  &quot;Hello, Kind!&quot;
+  "Hello, Kind!"
 }
 </code></pre>
 <h3 id="type-checking"><a class="header" href="#type-checking">Type Checking</a></h3>
-<p>With the code ready, you should use Type Checking to check if everything is in order. The type checker is still unknown in this guide, but it will be explained in more detail later. For now, just understand it as a checker that verifies if the file is correctly &quot;typed&quot;.</p>
-<p>To check the type of a Kind file, simply use the command <code>kind2 check nomeDoArquivo.kind2</code>. For the hello_world.kind2 file, it would be:</p>
+<p>With the code ready, you should use Type Checking to check if everything is in order. The type checker is still unknown in this guide, but it will be explained in more detail later. For now, just understand it as a checker that verifies if the file is correctly "typed".</p>
+<p>To check the type of a Kind file, simply use the command <code>kind2 check fileName.kind2</code>. For the hello_world.kind2 file, it would be:</p>
 <pre><code>kind2 check hello_world.kind2
 </code></pre>
 <p>The message <code>All terms check.</code> means your file is ready!</p>
@@ -249,10 +238,10 @@ touch hello_world.kind2
 </code></pre>
 <p>Is the type checking correct? Then let's run the code.</p>
 <h3 id="running-the-code"><a class="header" href="#running-the-code">Running the code</a></h3>
-<p>To run a file in Kind, use the command <code>kind2 run nomeDoArquivo.kind2</code>. It should look like this:</p>
+<p>To run a file in Kind, use the command <code>kind2 run fileName.kind2</code>. It should look like this:</p>
 <pre><code>kind2 run hello_world.kind2
 </code></pre>
-<p>And there you go! Your terminal should print &quot;Hello, Kind!&quot; back to you.</p>
+<p>And there you go! Your terminal should print "Hello, Kind!" back to you.</p>
 <h4 id="remember-to-do-all-the-steps-above-check-the-type-and-then-run"><a class="header" href="#remember-to-do-all-the-steps-above-check-the-type-and-then-run">Remember to do all the steps above, check the type, and then run</a></h4>
 <p>Great, now that you have your first Kind program running, you can start exploring more about the language and its features. Congratulations on your progress!</p>
 <p>If you have any questions or need help, don't hesitate to ask. We are always available to help!</p>
@@ -277,10 +266,10 @@ touch hello_world.kind2
 mathematics: If a procedure or method has no side effects, then (ignoring efficiency)
 all we need to understand about it is how to map inputs to outputs - in other words,
 we can think of it as a concrete method that computes a mathematical function.
-This is one sense of &quot;functional&quot; in &quot;functional programming&quot;. The direct connection
+This is one sense of "functional" in "functional programming". The direct connection
 between programs and simple mathematical objects supports both the formality of
 correctness proofs and informal reasoning about program behavior.</p>
-<p>The other sense in which functional programming is &quot;functional&quot; is that it emphasizes
+<p>The other sense in which functional programming is "functional" is that it emphasizes
 the use of functions as first-class values - that is, values that can be passed as
 arguments to other functions, returned as results, included in data structures, etc.
 The recognition that functions can be treated in this way as data enables a range of
@@ -315,7 +304,7 @@ from the library. -->
   saturday  // Saturday  is a Day
   sunday    // Sunday    is a Day
 }</code></pre>
-<p>The type is called <code>Day</code>, and its members are <code>Monday</code>, <code>Tuesday</code>, <code>Wednesday</code>, etc. The <code>&lt;name&gt; : &lt;type&gt;</code> definition can be read as &quot;name is a type&quot;.
+<p>The type is called <code>Day</code>, and its members are <code>Monday</code>, <code>Tuesday</code>, <code>Wednesday</code>, etc. The <code>&lt;name&gt; : &lt;type&gt;</code> definition can be read as "name is a type".
 Above, we have both an example of creating a new <code>Day : Type</code>, and declaring an element of an existing type <code>Wednesday : Day</code>.</p>
 <p>Now that we have defined what a Day is, we can write functions that operate using this type. Type the following:</p>
 <pre><code class="language-rust ignore">NextWeekday (d: Day) : Day</code></pre>
@@ -365,20 +354,20 @@ TestNextWeekday = Prop.Equal.refl</code></pre>
  false
 }</code></pre>
 <!-- TODO mudar isso aqui caso tenhamos um gerenciador de pacotes -->
-<p>We are declaring our own booleans just to demonstrate how to do everything from scratch. Kind has its own default implementation of booleans in the standard package (<a href="Book/chapter_02/github.com/Kindelia/Wikind">Wikind</a>), along with many other structures and proofs.</p>
+<p>We are declaring our own booleans just to demonstrate how to do everything from scratch. Kind has its own default implementation of booleans in the standard package (<a href="https://github.com/Kindelia/Wikind">Wikind</a>), along with many other structures and proofs.</p>
 <p>In fact, at the time of writing, you need to be working within the Wikind folder to do proofs and the theorem resolution utilities are not built-in.</p>
 <p>Functions that operate on booleans are defined in the same way as seen earlier:</p>
-<pre><code class="language-rust ignore">// Negação lógica
+<pre><code class="language-rust ignore">// Logic NOT
 Notb (b: Bool)  : Bool
 Notb Bool.true  = Bool.false
 Notb Bool.false = Bool.true
 
-// E lógico
+// Logic AND
 Andb (b1: Bool) (b2: Bool) : Bool
 Andb Bool.true  b2 = b2
 Andb Bool.false b2 = Bool.false
 
-// OU lógico
+// Logic OR
 Orb (b1: Bool) (b2: Bool) : Bool
 Orb Bool.true  b2 = Bool.true
 Orb Bool.false b2 = b2</code></pre>
@@ -396,7 +385,7 @@ TestOrb3 = Prop.Equal.refl
 TestOrb4 : Prop.Equal Bool (Orb Bool.true Bool.true) Bool.true
 TestOrb4 = Prop.Equal.refl</code></pre>
 <h4 id="nandb"><a class="header" href="#nandb">Nandb</a></h4>
-<p>Replace the hole &quot;?&quot;, completing the following function;</p>
+<p>Replace the hole "?", completing the following function;</p>
 <p>then check if it is correct using the following statements (Analogous to how it was done for the <code>Orb</code> function). The function returns <code>Bool.true</code> if any of its inputs is <code>Bool.false</code>.</p>
 <pre><code class="language-rust ignore">Nandb (b1: Bool) (b2: Bool) : Bool
 Nandb b1 b2 = ?
@@ -434,13 +423,13 @@ For example, <code>Bool.true</code> has type <code>Bool</code>, just like <code>
 <p>Functions like <code>Notb</code>, before they receive arguments, also have a type, just like <code>Bool.true</code> or <code>Bool.false</code>.
 Their types are called Function Types, and are denoted with arrows.</p>
 <p><code>Notb</code>, for example, would be denoted as <code>Bool -&gt; Bool</code>, which can be read as
-&quot;a function that takes a <code>Bool</code> as input and returns a value of type <code>Bool</code>&quot;.
+"a function that takes a <code>Bool</code> as input and returns a value of type <code>Bool</code>".
 Similarly, the type of the <code>Andb</code> function is <code>Bool -&gt; Bool -&gt; Bool</code>, meaning
-&quot;a function that takes two arguments of type <code>Bool</code> and returns a value of type <code>Bool</code>&quot;.</p>
+"a function that takes two arguments of type <code>Bool</code> and returns a value of type <code>Bool</code>".</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="modules"><a class="header" href="#modules">Modules</a></h2>
 <!-- TODO fill in when we have a module system -->
 <p>We don't have a module system yet :pensive:. To use functions from other files,
-you need to create a file within the same directory (e.g., the root folder of <a href="https://github.com/HigherOrderCO/Kindex">Kindex</a>.</p>
+you need to create a file within the same directory (e.g., the root folder of <a href="https://github.com/HigherOrderCO/Kindex">Kindex</a>).</p>
 <h2 id="use"><a class="header" href="#use">Use</a></h2>
 <p>The <em>use</em> statement is a useful feature in the <em>Kind</em> language that allows you to create aliases for functions or data types. It simplifies the usage of specific functions or types in your code. Let's explore its usage with practical examples.</p>
 <h3 id="step-1-importing-functions-with-use"><a class="header" href="#step-1-importing-functions-with-use">Step 1: Importing Functions with use</a></h3>
@@ -521,7 +510,7 @@ The annotations we used for them are analogous to the <code>Nat.zero</code> cons
 // less than 0 returns 0
 Pred  Nat.zero    = Nat.zero
 Pred (Nat.succ k) = k</code></pre>
-<p>The second pattern can be read as: &quot;if <code>n</code> has the form <code>(Nat.succ k)</code> for some k, return k.&quot;</p>
+<p>The second pattern can be read as: "if <code>n</code> has the form <code>(Nat.succ k)</code> for some k, return k."</p>
 <pre><code class="language-rust ignore">MinusTwo (n: Nat) : Nat
 MinusTwo  Nat.zero               = Nat.zero
 MinusTwo (Nat.succ  Nat.zero)    = Nat.zero
@@ -625,7 +614,7 @@ TestLte2 = Equal/refl
 TestLte3 : Equal/ Bool/ (Lte 4n 2n) Bool/false
 TestLte3 = Equal/refl</code></pre>
 <h4 id="blt_nat"><a class="header" href="#blt_nat">Blt_nat</a></h4>
-<p>The <code>Blt_nat</code>function tests the &quot;less than&quot; relationship in natural numbers.
+<p>The <code>Blt_nat</code>function tests the "less than" relationship in natural numbers.
 Instead of creating a new recursive function, define it using previously defined functions.</p>
 <pre><code class="language-rust ignore">Blt_nat (n: Nat) (m: Nat) : Bool/
 Blt_nat n m = ?</code></pre>
@@ -639,7 +628,7 @@ Test_blt_nat_3 : Equal/ Bool/ (Blt_nat 4n 2n) Bool/false
 Test_blt_nat_3 = ?</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="proof-by-simplification"><a class="header" href="#proof-by-simplification">Proof by Simplification</a></h2>
 <p>Now that we have defined some data types and functions, let's start proving properties of their behaviors. In fact, we have already been doing this: each function in the previous sections that starts with <code>Test</code> makes a precise assertion about the behavior of some function for specific inputs. The proofs of these assertions were always the same: use <code>Equal.refl</code> to check that both sides are indeed identical.</p>
-<p>The same type of &quot;proof by simplification&quot; can be used to prove more interesting properties. For example, the fact that <code>Nat.zero</code> is a &quot;neutral element&quot; on the left-hand side of addition can be proven simply by observing that <code>Plus Nat.zero n</code> reduces to <code>n</code>, regardless of what <code>n</code> is, a fact that can be read directly from the definition of <code>Plus</code>.</p>
+<p>The same type of "proof by simplification" can be used to prove more interesting properties. For example, the fact that <code>Nat.zero</code> is a "neutral element" on the left-hand side of addition can be proven simply by observing that <code>Plus Nat.zero n</code> reduces to <code>n</code>, regardless of what <code>n</code> is, a fact that can be read directly from the definition of <code>Plus</code>.</p>
 <pre><code class="language-rust ignore">Plus_Z_n (n: Nat) : Equal/ Nat (Plus Nat.zero n) n
 Plus_Z_n n = Equal/refl</code></pre>
 <p>Other similar theorems can be proven in a similar way.</p>
@@ -671,7 +660,7 @@ Plus_n_Z n = Equal/refl</code></pre>
 <p>For example:</p>
 <pre><code class="language-rust ignore">Example_apply (n: Nat) (m: Nat) (e: Equal/ Nat m n) : Equal/ Nat (Nat.succ m) (Nat.succ n)
 Example_apply n m e = ?</code></pre>
-<p>What do we have here? We have a proof that takes another proof/equality as argument. This means that we will carry out our proof assuming that the proof given as argument is also true. So, reading the statement of the proof, we have: &quot;Given two naturals, <code>m</code> and <code>n</code>, and a proof that they are equal, prove that <code>Nat.succ m</code> and <code>Nat.succ n</code> are also equal&quot;.</p>
+<p>What do we have here? We have a proof that takes another proof/equality as argument. This means that we will carry out our proof assuming that the proof given as argument is also true. So, reading the statement of the proof, we have: "Given two naturals, <code>m</code> and <code>n</code>, and a proof that they are equal, prove that <code>Nat.succ m</code> and <code>Nat.succ n</code> are also equal".</p>
 <p>We learned in our math classes that applying a function to both sides of an equality preserves the equality (<code>x/2 = 3 -&gt; 2x/2 = 23</code>), and we can see that to prove what we want, we need to apply the function <code>Nat.succ</code> to both sides of <code>e</code>, using <code>Equal.apply</code>.</p>
 <pre><code class="language-diff">+ INFO  Inspection.
 
@@ -715,7 +704,7 @@ Example_apply n m e =
 <p>The next tool for formal proofs will be case analysis, which means using <em>pattern matching</em> in the proof. For example, let's prove that the logical AND of anything and False is always False:</p>
 <pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b1 Bool/false) Bool/false
 Example_case_analysis b = ?</code></pre>
-<p>Although it may seem like a proof that could be solved simply with <code>Equal/refl</code>, it's not the case. This is because the <code>Andb</code> function pattern matches on the first argument, and we don't have its value in the proof, so it remains &quot;stuck&quot;.</p>
+<p>Although it may seem like a proof that could be solved simply with <code>Equal/refl</code>, it's not the case. This is because the <code>Andb</code> function pattern matches on the first argument, and we don't have its value in the proof, so it remains "stuck".</p>
 <p>To give a value to it and show that the proof is correct for both <code>Bool</code> values, we <em>pattern match</em> in the proof, creating two different proofs: one for when <code>b</code> is <code>Bool/true</code> and one for when it's <code>Bool/false</code>.</p>
 <pre><code class="language-rust ignore">Example_case_analysis (b: Bool/) : Equal/ Bool/ (Andb b Bool/false) Bool/false
 Example_case_analysis Bool/true  = ?
@@ -801,7 +790,7 @@ Example_mirror a b e =
 </code></pre>
 <p>Although it may not seem very useful at the moment, this operation is very useful for our second utility: <code>Equal/chain</code>. <code>Equal/chain</code> is a specific case of <code>Equal/rewrite</code>, in which you rewrite an entire side of an equality using another.</p>
 <pre><code class="language-rust ignore">Example_chain (a: Nat) (b: Nat) (c: Nat) (e1: Equal/ Nat b (Plus a a)) (e2 : Equal/ Nat c (Plus a a)) : Equal/ Nat b c</code></pre>
-<p>Since we already know <code>Equal.rewrite</code>, we could use it to solve this theorem, but instead we will use <code>Equal.chain</code>.<code>Equal.chain</code> works by &quot;chaining&quot; two equalities that have the same expression on the right side of the first equality and on the left side of the second, &quot;gluing&quot; these equalities together by the common expression, generating a new equality with the other two expressions (<code>Equal.chain (a = b) (b = c) = (a = c)</code>). For example, in our example, the right side of the two equalities is equal. If we use <code>Equal.mirror</code> on one of them, we can then use <code>Equal.chain</code> on them:</p>
+<p>Since we already know <code>Equal.rewrite</code>, we could use it to solve this theorem, but instead we will use <code>Equal.chain</code>.<code>Equal.chain</code> works by "chaining" two equalities that have the same expression on the right side of the first equality and on the left side of the second, "gluing" these equalities together by the common expression, generating a new equality with the other two expressions (<code>Equal.chain (a = b) (b = c) = (a = c)</code>). For example, in our example, the right side of the two equalities is equal. If we use <code>Equal.mirror</code> on one of them, we can then use <code>Equal.chain</code> on them:</p>
 <pre><code class="language-rust ignore">Example_chain (a: Nat) (b: Nat) (c: Nat) (e1: Equal/ Nat b (Plus a a)) (e2 : Equal/ Nat c (Plus a a)) : Equal/ Nat b c
 Example_chain a b c e1 e2 =
   let e3 = Equal/mirror e2
@@ -840,7 +829,7 @@ Andb_eq_orb b c prf = ?</code></pre>
 <li>twice a number plus 1.</li>
 </ul>
 <ol>
-<li>First, write an inductive definition of this type, calling it <code>Bin</code>. (Remember that, in essence, the definition of <code>Nat</code> as <code>zero</code> or <code>succ n</code> has no intrinsic meaning. It only says that an element of <code>Nat</code> can be a <code>zero</code> or a s<code>ucc n</code> if <code>n</code> is also <code>Nat</code>. The interpretation of this as a system of values 0, 1, 2, etc., comes from how we work with this type <code>Nat</code>. Your definition of <code>Bin</code> ideally will be as simple as well. It will be the functions you make on <code>Bin</code> that will give mathematical sense to it).</li>
+<li>First, write an inductive definition of this type, calling it <code>Bin</code>. (Remember that, in essence, the definition of <code>Nat</code> as <code>zero</code> or <code>succ n</code> has no intrinsic meaning. It only says that an element of <code>Nat</code> can be a <code>zero</code> or a <code>succ n</code> if <code>n</code> is also <code>Nat</code>. The interpretation of this as a system of values 0, 1, 2, etc., comes from how we work with this type <code>Nat</code>. Your definition of <code>Bin</code> ideally will be as simple as well. It will be the functions you make on <code>Bin</code> that will give mathematical sense to it).</li>
 <li>Then write an <code>Incr</code> function to increment a <code>Bin</code>, and a <code>Bin_to_nat</code> function to convert from <code>Bin</code> to <code>Nat</code>.</li>
 <li>Write five proofs that test your increment and conversion functions. Note that incrementing a binary and then converting it should result in the same result as converting it first and then incrementing the <code>Nat</code>.</li>
 </ol>
@@ -987,7 +976,7 @@ Evenb_s n = ?</code></pre>
 <pre><code class="language-rust ignore">Equal/ Nat/ (Nat/succ (Plus n (Nat/succ m))) (Nat/succ (Nat/succ (Plus n m)))</code></pre>
 <p>Just return app and Kind will give us the coveted <code>All terms check</code>.</p>
 <h1 id="using-other-theorems"><a class="header" href="#using-other-theorems">Using other theorems</a></h1>
-<p>In Kind, as in informal mathematics, large proofs are often divided into a sequence of theorems, with later proofs referring to earlier theorems. But sometimes a proof will require some varied fact that is too trivial and of too little general interest to give it its own higher-level name. In these cases, it is convenient to be able to simply state and prove the necessary &quot;sub-theorem&quot; exactly at the point where it is used.</p>
+<p>In Kind, as in informal mathematics, large proofs are often divided into a sequence of theorems, with later proofs referring to earlier theorems. But sometimes a proof will require some varied fact that is too trivial and of too little general interest to give it its own higher-level name. In these cases, it is convenient to be able to simply state and prove the necessary "sub-theorem" exactly at the point where it is used.</p>
 <p>Let's analyze the following addition commutation theorem:</p>
 <pre><code class="language-rust ignore">Problems.t3 (n: Nat/) (m: Nat/) : Equal/ Nat/ (Plus n  m) (Plus m n)</code></pre>
 <p>In the first case, for <code>n</code> and <code>m</code> equal to zero we have a reflection:</p>
@@ -1091,7 +1080,7 @@ Surjective_pairing (Pair.new Nat Nat fst snd) = Equal.refl</code></pre>
 <pre><code class="language-rust ignore">Equal (Pair Nat Nat) p (Pair.new (Fst p) (Snd p))</code></pre>
 <p>And received</p>
 <pre><code class="language-rust ignore">Equal p p</code></pre>
-<p>We must &quot;expose&quot; the internal structure of the <code>pair</code> so that the <code>Type Checker</code> can verify whether <code>p</code> is really equal to <code>Pair.new (Fst p) (Snd p)</code>.</p>
+<p>We must "expose" the internal structure of the <code>pair</code> so that the <code>Type Checker</code> can verify whether <code>p</code> is really equal to <code>Pair.new (Fst p) (Snd p)</code>.</p>
 <h4 id="snd_fst_is_swap"><a class="header" href="#snd_fst_is_swap">Snd_fst_is_swap</a></h4>
 <pre><code class="language-rust ignore">Snd_fst_is_swap (p: Pair Nat Nat ) : Equal (Pair Nat Nat) (Pair.swap Nat Nat (Pair.swap Nat Nat p) p)
 Snd_fst_is_swap (Pair.new Nat Nat fst snd) = ? </code></pre>
@@ -1099,7 +1088,7 @@ Snd_fst_is_swap (Pair.new Nat Nat fst snd) = ? </code></pre>
 <pre><code class="language-rust ignore">Fst_swap_is_inverse (p: Pair Nat Nat) (a: Nat) (b: Nat) : Equal (Pair Nat Nat) (Pair.swap Nat Nat (Pair.new a b) (Pair.new b a))
 Fst_swap_is_inverse p a b = ?</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="number-lists"><a class="header" href="#number-lists">Number Lists</a></h2>
-<p>Generalizing the definition of pairs, we can describe the type of number lists as follows: &quot;A list is either the empty list or a set of one element and another list&quot;, this type is not composed of a <code>head</code> and a <code>tail</code>.</p>
+<p>Generalizing the definition of pairs, we can describe the type of number lists as follows: "A list is either the empty list or a set of one element and another list", this type is not composed of a <code>head</code> and a <code>tail</code>.</p>
 <pre><code class="language-rust ignore">type List (t) {
   nil
   cons (head: t) (tail: List t)
@@ -1126,16 +1115,16 @@ list of 4 elements <code>[1n, 2n, 3n, 4n]</code>, we now see it as follows:</p>
 <code>head</code> <code>2n</code> and the <code>tail</code> <code>[3n, 4n]</code> which also has its <code>head</code> <code>3n</code> and its <code>tail</code> <code>4n</code>.</p>
 <p>It may seem scary, but it's a friendly monster:</p>
 <p><img src="Book/chapter_04/../../Imgs/listmonster.png" alt="img" /></p>
-<p>[fonte da imagem: http://learnyouahaskell.com/starting-out]</p>
+<p>[image font: http://learnyouahaskell.com/starting-out]</p>
 <h3 id="repeat"><a class="header" href="#repeat">Repeat</a></h3>
 <p>The function <code>repeat</code> takes a number <code>n</code> and a value, returning a list of size <code>n</code> where all elements are the declared value.</p>
-<pre><code class="language-rust ignore">// Exemplo: (Repeat 3 Bool.true) -&gt; [True, True, True]
+<pre><code class="language-rust ignore">// Example: (Repeat 3 Bool.true) -&gt; [True, True, True]
 Repeat (x: Nat) (count: Nat) : List Nat
 Repeat x Nat.zero            = [] 
 Repeat x (Nat.succ count)    = List.cons Nat x (Repeat count x)</code></pre>
 <h3 id="length"><a class="header" href="#length">Length</a></h3>
 <p>The function <code>length</code> calculates the size of the list.</p>
-<pre><code class="language-rust ignore">// Exemplo: (Length [1,2,3]) -&gt; 3
+<pre><code class="language-rust ignore">// Example: (Length [1,2,3]) -&gt; 3
 Length (xs: List Nat) : Nat
 Length List.nil              = 0n
 Length (List.cons head tail) = (Nat.succ (Length tail))</code></pre>
@@ -1145,12 +1134,12 @@ Length (List.cons head tail) = (Nat.succ (Length tail))</code></pre>
 Concat (List.nil)            ys = ys
 Concat (List.cons head tail) ys = List.cons Nat head (Concat tail ys)</code></pre>
 <h3 id="head-and-tail"><a class="header" href="#head-and-tail">Head and Tail</a></h3>
-<p>The head function returns the first element (the &quot;head&quot;) of the list, while tail returns everything except the first element (the &quot;tail&quot;). Of course, an empty list has no first element, so we must handle this case with a <code>Maybe</code> type, receiving a <code>Maybe.none</code> if the list is empty or a <code>Maybe.some</code> if it has a value.</p>
-<pre><code class="language-rust ignore">// Exemplo: (Head 0n [1n,2n,3n]) -&gt; 1n
+<p>The head function returns the first element (the "head") of the list, while tail returns everything except the first element (the "tail"). Of course, an empty list has no first element, so we must handle this case with a <code>Maybe</code> type, receiving a <code>Maybe.none</code> if the list is empty or a <code>Maybe.some</code> if it has a value.</p>
+<pre><code class="language-rust ignore">// Example: (Head 0n [1n,2n,3n]) -&gt; 1n
 Head (default: Nat) (xs: List Nat) :  Nat
 Head default (List.nil)            = default
 Head default (List.cons head tail) = head</code></pre>
-<pre><code class="language-rust ignore">// Exemplo: (Tail Nat [1,2,3]) -&gt; [2,3]
+<pre><code class="language-rust ignore">// Example: (Tail Nat [1,2,3]) -&gt; [2,3]
 Tail (xs: List Nat)        : List Nat
 Tail (List.nil)            = []
 Tail (List.cons head tail) = tail</code></pre>
@@ -1246,7 +1235,7 @@ Test_subset2 = ?</code></pre>
 <p>Just like numbers, simple facts about list processing functions can sometimes be entirely proven by simplification. For example, the simplification performed by <code>Equal.refl</code> is sufficient for this theorem...</p>
 <pre><code class="language-rust ignore">`List.nil`_app (xs: List Nat) : Equal (Concat (List.nil Nat) xs) xs
 `List.nil`_app xs = Equal.refl</code></pre>
-<p>...this is because the Type &quot;sees&quot; the <code>List.nil</code> and automatically reduces equality just as it does with natural numbers and <code>Nat.zero</code>.</p>
+<p>...this is because the Type "sees" the <code>List.nil</code> and automatically reduces equality just as it does with natural numbers and <code>Nat.zero</code>.</p>
 <p>Furthermore, as with numbers, it is sometimes useful to perform a case analysis on the possible forms (empty or non-empty) of an unknown list.</p>
 <pre><code class="language-rust ignore">Tl_length_pred (xs: List Nat)         : Equal Nat (Pred (Length xs)) (Length (Tail xs))
 Tl_length_pred List.nil               = Equal.refl
@@ -1284,13 +1273,13 @@ Concat_assoc (List.cons Nat xs.head xs.tail)        ys zs =
   app</code></pre>
 <p>We are given three lists <code>xs</code>, <code>ys</code>, and <code>zs</code> and we check if concatenating <code>xs</code> and <code>ys</code> with <code>zs</code> is equal to concatenating <code>xs</code> with the concatenation of <code>ys</code> and <code>zs</code>.</p>
 <p>For this, we check for the case where <code>xs</code> is an empty list, then we receive a reflection that the concatenation is between <code>ys</code> and <code>zs</code>, and it suffices to give an <code>Equal.refl</code>.</p>
-<p>Next, we &quot;open up&quot; <code>xs</code> to obtain <code>xs.tail</code> for our induction, and we receive as the objective:</p>
+<p>Next, we "open up" <code>xs</code> to obtain <code>xs.tail</code> for our induction, and we receive as the objective:</p>
 <pre><code> • Expected: Equal (List Nat) (List.cons Nat xs.head (Concat (Concat xs.tail ys) zs)) (List.cons Nat xs.head (Concat xs.tail (Concat ys zs))) 
 </code></pre>
 <p>and our <code>ind</code> variable is:</p>
 <pre><code> • ind: Equal (List Nat) (Concat (Concat xs.tail ys) zs) (Concat xs.tail (Concat ys zs))
 </code></pre>
-<p>it is sufficient to apply a L<code>ist.cons xs.head</code> on both sides of the equality to obtain the final objective, which is what we do in <code>app</code>:</p>
+<p>it is sufficient to apply a <code>List.cons xs.head</code> on both sides of the equality to obtain the final objective, which is what we do in <code>app</code>:</p>
 <pre><code> • app : Equal (List Nat) (List.cons Nat xs.head (Concat (Concat xs.tail ys) zs)) (List.cons Nat xs.head (Concat xs.tail (Concat ys zs)))
 </code></pre>
 <p><em>NOTE</em></p>
@@ -1391,7 +1380,6 @@ Rev_length (List.cons Nat head tail)  =
 <p>When we Type Check, we see our new context:</p>
 <pre><code class="language-Terminal"> • chn : Equal Nat (Length (Concat (Rev tail) (List.cons Nat head (List.nil Nat)))) (Nat.succ (Length (Rev tail)))
 </code></pre>
-<p>Nossa variável <code>chn</code> é praticamente idêntica ao nosso <code>Expected</code> só diferindo na parte final, pois <code>Expected</code> espera um <code>Nat.succ (Length xs.tail)</code> e o <code>chn</code> nos dá <code>Nat.succ (Length (Rev xs.tail))</code>, mas nós temos a variável <code>ind</code> que nos retorna essa igualdade. Vamos relembrar:</p>
 <p>Our <code>chn</code> variable is practically identical to our <code>Expected</code>, differing only in the final part, since <code>Expected</code> expects a <code>Nat.succ (Length xs.tail)</code> and <code>chn</code> gives us <code>Nat.succ (Length (Rev xs.tail))</code>, but we have the <code>ind</code> variable that returns us this equality. Let's remember:</p>
 <pre><code class="language-Terminal"> • ind: Equal Nat (Length (Rev tail)) (Length tail) 
 </code></pre>
@@ -1474,7 +1462,7 @@ Count_member_nonzero xs = ?</code></pre>
 <p>Prove that the <code>Rev</code> function is injective - that is,</p>
 <pre><code class="language-rust ignore">Rev_injective (xs: List Nat) (ys: List Nat) (e: Equal (List Nat) (Rev xs) (Rev ys)) :tail Equal (List Nat) xs ys
 Rev_injective xs ys e = ?  </code></pre>
-<h4 id="opcional-count_sum"><a class="header" href="#opcional-count_sum">Opcional: Count_sum</a></h4>
+<h4 id="optional-count_sum"><a class="header" href="#optional-count_sum">Optional: Count_sum</a></h4>
 <p>Write an interesting theorem about Lists involving the functions count and sum, and prove it. (You may find that the difficulty of the test depends on how you set the count!)</p>
 <pre><code class="language-rust ignore">Count_sum : ?
 </code></pre>
@@ -1524,7 +1512,7 @@ Test_head_error2 = ?
 
 Test_head_error3 : Equal (Head_error  [5n,6n]) (Maybe.some Nat 5n)
 Test_head_error3 = ?</code></pre>
-<h4 id="opcional-extract_head"><a class="header" href="#opcional-extract_head">Opcional: Extract_head</a></h4>
+<h4 id="optional-extract_head"><a class="header" href="#optional-extract_head">Optional: Extract_head</a></h4>
 <p>This exercise relates your new <code>Head_error</code> to the old <code>Head</code>.</p>
 <pre><code class="language-rust ignore">Extract_head (l: List Nat) (default: Nat) : Equal Nat (Head default l)  (Extract default (Head_error l))
 Extract_head l default = ?</code></pre>
@@ -1610,12 +1598,12 @@ Concat (List.cons head tail)          ys = List.cons head (Concat tail ys)
 </code></pre>
 <p>Note that there are two notations, one where we only use <code>&lt;a&gt;</code> and another where we use <code>&lt;a: Type&gt;</code>, we can use either one, the <strong>Kind</strong> is capable of understanding both forms, it will be up to the developer to choose which one to use and the complexity of what will be developed, since in very complex code, it may be interesting to make explicit to other programmers what each thing is.</p>
 <p>Now it's time to implement our functions with implicit typing, using <code>hole</code> and <code>sugar syntax</code>:</p>
-<pre><code class="language-rust ignore">Concat_implicito (xs: List _) (ys: List _) : List _
-Concat_implicito []                     ys = ys
-Concat_implicito (List.cons head tail)  ys = List.cons head (Concat_implicito tail ys)</code></pre>
+<pre><code class="language-rust ignore">Concat_implicit (xs: List _) (ys: List _) : List _
+Concat_implicit []                     ys = ys
+Concat_implicit (List.cons head tail)  ys = List.cons head (Concat_implicit tail ys)</code></pre>
 <p>Here we learned one more thing, the <code>sugar syntax</code> for an empty list is just <code>[]</code>, but this is wrong, since the <code>sugar syntax</code> for kind doesn't work on the left side of the function scope, only on the right side. Using the wrong <code>sugar syntax</code> results in an error shown by <strong>Kind</strong>:</p>
 <pre><code class="language-diff">- ERROR  Unexpected token '['.
-    Concat_implicito []  ys = ys
+    Concat_implicit []  ys = ys
                   ┬
                   └Here!
 </code></pre>
@@ -1711,7 +1699,7 @@ Test_nth_error3 = Equal.refl
 </code></pre>
 <h4 id="hd_error"><a class="header" href="#hd_error">Hd_error</a></h4>
 <p>Complete the definition of a polymorphic version of the Hd_error function from the last chapter. Make sure it passes the unit tests below.</p>
-<pre><code class="language-rust ignore">Hd_error &lt;a&gt; (xs: Lista a) : Maybe a
+<pre><code class="language-rust ignore">Hd_error &lt;a&gt; (xs: List a) : Maybe a
 Hd_error xs = ?
 
 Test_hd_error1 : Equal (Hd_error [1, 2]) (Maybe.some 1)
@@ -1723,7 +1711,7 @@ Test_hd_error2 = ?</code></pre>
 <p>Functions as data
 Like many other modern programming languages -- including all functional languages (ML, Haskell, Scheme, Scala, Clojure, etc.) -- Kind treats functions as first-class citizens, allowing them to be passed as arguments to other functions, returned as results, stored in data structures, etc.</p>
 <h3 id="higher-order-functions"><a class="header" href="#higher-order-functions">Higher-Order Functions</a></h3>
-<p>Functions that manipulate other functions are often called higher-order functions (or &quot;higher-order&quot; for short). Here is a simple example:</p>
+<p>Functions that manipulate other functions are often called higher-order functions (or "higher-order" for short). Here is a simple example:</p>
 <pre><code class="language-rust ignore">Doit3times &lt;x&gt; (f: x -&gt; x) (n: x) : x
 Doit3times f x = (f (f (f x)))
 
@@ -1733,12 +1721,12 @@ Test_doit3times1 = Equal.refl
 Test_doit3times2 : Equal (Doit3times (x =&gt; Notb x) Bool.true) (Bool.false)
 Test_doit3times2 = Equal.refl</code></pre>
 <h3 id="filter"><a class="header" href="#filter">Filter</a></h3>
-<p>Here is a more useful higher-order function, taking a list of xs and a predicate on x (a function from x to Bool) and &quot;filtering&quot; the list, returning a new list containing only those elements for which the predicate returns Bool.true.</p>
+<p>Here is a more useful higher-order function, taking a list of xs and a predicate on x (a function from x to Bool) and "filtering" the list, returning a new list containing only those elements for which the predicate returns Bool.true.</p>
 <pre><code class="language-rust ignore">Filter &lt;x&gt; (test: x -&gt; Bool) (xs: List x) : List x
 Filter test List.nil                      = []
 Filter test (List.cons head tail)         =
    Bool.if (test head) (List.cons head (Filter test tail)) (Filter test tail)</code></pre>
-<p>For example, if we apply the &quot;is even&quot; filter to a list of numbers, it will return another list with only the even numbers.</p>
+<p>For example, if we apply the "is even" filter to a list of numbers, it will return another list with only the even numbers.</p>
 <pre><code class="language-rust ignore">Test_filter1 : Equal (Filter (x =&gt; Evenb x) [1,2,3,4,5])  [2,4]  
 Test_filter1 = Equal.refl
 
@@ -1761,11 +1749,11 @@ Test_CountOddMembers3 : Equal (CountOddMembers []) 0n
 Test_CountOddMembers3 = Equal.refl</code></pre>
 <h3 id="anonymous-functions"><a class="header" href="#anonymous-functions">Anonymous Functions</a></h3>
 <p>It is arguably a bit sad, in the example above, to be forced to define the function <strong>Length_is_one</strong> and give it a name just to be able to pass it as an argument to filter, since we will probably never use it again.</p>
-<p>Furthermore, this is not an isolated example: when using higher-order functions, we often want to pass &quot;unique&quot; functions as arguments that we will never use again; having to name each of these functions would be tedious.</p>
-<p>Fortunately, there is a better way. We can build a function &quot;on the fly&quot; without declaring it at the top level or giving it a name.</p>
+<p>Furthermore, this is not an isolated example: when using higher-order functions, we often want to pass "unique" functions as arguments that we will never use again; having to name each of these functions would be tedious.</p>
+<p>Fortunately, there is a better way. We can build a function "on the fly" without declaring it at the top level or giving it a name.</p>
 <pre><code class="language-rust ignore">Test_anon_fun : Equal (Doit3times (x =&gt; (Mult x x)) 2n) 256n
 Test_anon_fun = Equal.refl</code></pre>
-<p>The expression <code>x =&gt; (Mult x x)</code> can be read as &quot;the function takes a number <code>n</code> and returns <code>n * n</code>&quot;.</p>
+<p>The expression <code>x =&gt; (Mult x x)</code> can be read as "the function takes a number <code>n</code> and returns <code>n * n</code>".</p>
 <p>Here is the example of <strong>Filter</strong> rewritten to use an anonymous function:</p>
 <pre><code class="language-rust ignore">Test_filter2 : Equal (Filter (x =&gt; (Length_is_one x)) [[1],[1,2],[2],[1,2,3],[21]]) [[1],[2],[21]]
 Test_filter2 = Equal.refl
@@ -1780,7 +1768,7 @@ Test_filter_even_gt7a = ?
 
 Test_filter_even_gt7b : Equal (Filter_even_gt7 [5n, 2n, 6n, 19n, 129n]) []
 Test_filter_even_gt7b = ?</code></pre>
-<p>A small observation, the attentive reader may have noticed that we used a new notation, the n after the numbers. This is a sugar syntax that Kind has. We can write natural numbers by simply adding an n to the number. However, this is a syntax that can end up weighing down Kind. Imagine that the user only wants to add the number <code>1</code> to <code>1000000</code>, it's a simple calculation that Kind can easily handle, but it becomes a bit heavier when using the sugar syntax for natural numbers. The sum will be <code>Plus 1n 1000000n</code>, but Kind will need to check each <code>Nat.succ</code> up to one million and one, in other words, one million and one &quot;<em>Nat.succ</em>&quot; will be computed unnecessarily. This syntax is very useful, but we should use it with care. Ideally, for large numbers, U60.to_nat should be used, which is much lighter for Kind.</p>
+<p>A small observation, the attentive reader may have noticed that we used a new notation, the n after the numbers. This is a sugar syntax that Kind has. We can write natural numbers by simply adding an n to the number. However, this is a syntax that can end up weighing down Kind. Imagine that the user only wants to add the number <code>1</code> to <code>1000000</code>, it's a simple calculation that Kind can easily handle, but it becomes a bit heavier when using the sugar syntax for natural numbers. The sum will be <code>Plus 1n 1000000n</code>, but Kind will need to check each <code>Nat.succ</code> up to one million and one, in other words, one million and one "<em>Nat.succ</em>" will be computed unnecessarily. This syntax is very useful, but we should use it with care. Ideally, for large numbers, U60.to_nat should be used, which is much lighter for Kind.</p>
 <h4 id="partition"><a class="header" href="#partition">Partition</a></h4>
 <p>Use Filter to write a Partition function in Kind.</p>
 <pre><code class="language-rust ignore">Partition &lt;x&gt; (test: x -&gt; Bool) (xs: List x) : Pair (List x) (List x)
@@ -1811,7 +1799,7 @@ Test_map3 = Equal.refl</code></pre>
 <pre><code class="language-rust ignore">Map_rev &lt;x&gt; &lt;y&gt; (f: x -&gt; y) (xs: List x) : Equal (Map f (Rev xs)) (Rev (Map f xs))
 Map_rev f xs = ?</code></pre>
 <h4 id="flat_equal"><a class="header" href="#flat_equal">Flat_equal</a></h4>
-<p>The Map function maps a <code>List x</code> to a <code>List y</code> using a function of type <code>x -&gt; y</code>. We can define a similar function, Flat_map, that maps a List x to a List y using a function f of type <code>x -&gt; List y</code>. Its definition should work by &quot;flattening&quot; the results of f, like so:</p>
+<p>The Map function maps a <code>List x</code> to a <code>List y</code> using a function of type <code>x -&gt; y</code>. We can define a similar function, Flat_map, that maps a List x to a List y using a function f of type <code>x -&gt; List y</code>. Its definition should work by "flattening" the results of f, like so:</p>
 <pre><code class="language-rust ignore">Flat_equal : Equal (Flat_map ( x =&gt; ([x , (Plus x 1n), (Plus x 2n)])) [1n, 5n, 10n]) [1n, 2n, 3n, 5n, 6n, 7n, 10n, 11n, 12n]
 Flat_equal = Equal.refl
 
@@ -1825,7 +1813,7 @@ Test_flat_map1 = ?</code></pre>
 Maybe_map f Maybe.none                      = Maybe.none
 Maybe_map f (Maybe.some x)                  = Maybe.some (f x)</code></pre>
 <h3 id="fold"><a class="header" href="#fold">Fold</a></h3>
-<p>An even more powerful higher-order function is called Fold. This function is the inspiration for the &quot;reduce&quot; operation that is at the heart of Google's map/reduce distributed programming framework.</p>
+<p>An even more powerful higher-order function is called Fold. This function is the inspiration for the "reduce" operation that is at the heart of Google's map/reduce distributed programming framework.</p>
 <pre><code class="language-rust ignore">Fold &lt;x&gt; &lt;y&gt; (f: x -&gt; y -&gt; y) (xs: List x) (a: y)   : y
 Fold f List.nil a                                   = a
 Fold f (List.cons head tail) a                      = f head (Fold f tail a)
@@ -1920,7 +1908,7 @@ One = s =&gt; z =&gt; s z
 <p>Similarly, <strong>Two</strong> applies the function <code>s</code> twice to <code>z</code>:</p>
 <pre><code class="language-rust ignore">Two : Num
 Two = s =&gt; z =&gt; s (s z)</code></pre>
-<p>Defining zero is a bit more complicated: how can we &quot;apply a function zero times&quot;? The answer is actually simple: just return the argument untouched.</p>
+<p>Defining zero is a bit more complicated: how can we "apply a function zero times"? The answer is actually simple: just return the argument untouched.</p>
 <pre><code class="language-rust ignore">Zero : Num
 Zero = s =&gt; z =&gt; z</code></pre>
 <p>More generally, a number n can be written as <code>s =&gt; z =&gt; s (s ... (s z) ...)</code>, with n occurrences of <code>s</code>. Note in particular how the function doit3times that we defined earlier is actually just the Church representation of 3.</p>
@@ -1966,7 +1954,7 @@ Mult_2 = ?
 Mult_3 : Equal (Mult Two Three) (Plus Three Three)
 Mult_3 = ?</code></pre>
 <h4 id="exponentiation"><a class="header" href="#exponentiation">Exponentiation</a></h4>
-<p>It is not possible to make it work with <code>Exp (n: Num) (m: Num) : Num</code>. Polymorphism plays a crucial role here. However, choosing the right type to iterate over can be tricky. If you encounter an &quot;inconsistency&quot; error, try iterating over a different type: Num itself is usually problematic.</p>
+<p>It is not possible to make it work with <code>Exp (n: Num) (m: Num) : Num</code>. Polymorphism plays a crucial role here. However, choosing the right type to iterate over can be tricky. If you encounter an "inconsistency" error, try iterating over a different type: Num itself is usually problematic.</p>
 <pre><code class="language-rust ignore">Exp (n: Num) (m: Num -&gt; Num) : Num
 Exp n m = ?
 
@@ -2008,25 +1996,25 @@ Sub_3 = ?</code></pre>
 <pre><code class="language-rust ignore">Bool: Type
 Bool.true  : Bool
 Bool.false : Bool</code></pre>
-<p>In the <em>Bool</em> type we have <code>Bool.true</code> and <code>Bool.false</code>. To create the Bool type, we declare that it is a type (Type) and then that <code>Bool.true</code> and <code>Bool.false</code> are of type Bool. Seeing how it is done, it becomes much simpler. We are often intimidated by the &quot;<em>functional</em>&quot; name, but Kind is a very friendly language, we will see more about this later on.</p>
+<p>In the <em>Bool</em> type we have <code>Bool.true</code> and <code>Bool.false</code>. To create the Bool type, we declare that it is a type (Type) and then that <code>Bool.true</code> and <code>Bool.false</code> are of type Bool. Seeing how it is done, it becomes much simpler. We are often intimidated by the "<em>functional</em>" name, but Kind is a very friendly language, we will see more about this later on.</p>
 <p>Another possible example is <em>Nat</em>, the natural numbers. Natural numbers are all non-negative integers. That is, they start with the number zero and go to infinity, but do not have decimal values. Therefore, <code>3</code> is a natural number, but <code>3.14</code> is not, just as <code>-3</code> is not. So we know that the natural number is made up of <em>zero</em> and its <em>successors</em>. Let's see how this is in Kind:</p>
 <pre><code class="language-rust ignore">Nat: Type
 Nat.zero             : Nat
 Nat.succ (pred: Nat) : Nat</code></pre>
-<p>We notice that the construction is similar to Booleans, but there is an extra element in <code>Nat.succ</code>, which is &quot;<em>(pred: Nat)</em>&quot;, and this is because, while in the other we had only two return options (<em>True</em> or <em>False</em>), now we have an infinity of numbers that the code needs to understand, and there must be a way for the code to stop running (we will see more about this throughout this study), since code that never stops running is code that will never give us the result.</p>
+<p>We notice that the construction is similar to Booleans, but there is an extra element in <code>Nat.succ</code>, which is "<em>(pred: Nat)</em>", and this is because, while in the other we had only two return options (<em>True</em> or <em>False</em>), now we have an infinity of numbers that the code needs to understand, and there must be a way for the code to stop running (we will see more about this throughout this study), since code that never stops running is code that will never give us the result.</p>
 <p>However, in any case, we notice that the structure of <em>Nat</em> is basically the same as <em>Bool</em>, which shows us that we can create any type, as long as we follow the same structure. Let's create the juice type:</p>
 <pre><code class="language-rust ignore">Juice : Type
-Juice.laranja : Juice
-Juice.caju    : Juice</code></pre>
-<p>Orange juice has two constructors, <em>Juice.laranja</em> and <em>Juice.caju</em>. This type is fictitious, it did not exist until now, but now we can use it as a type and this shows us that, thanks to Kind's design, we can create an infinity of types, since every type is a function.</p>
+Juice.orange : Juice
+Juice.cashew    : Juice</code></pre>
+<p>Orange juice has two constructors, <em>Juice.orange</em> and <em>Juice.cashew</em>. This type is fictitious, it did not exist until now, but now we can use it as a type and this shows us that, thanks to Kind's design, we can create an infinity of types, since every type is a function.</p>
 <p>Understanding the construction of <em>types</em> will prevent some syntax errors from occurring.</p>
 <p>to review, our element <em>Juice</em> is of type Type and <em>Juice.orange</em> is of type <em>Juice</em>. Thus, in layman's terms, the element is to the right of the colon and the type is to the left:</p>
 <pre><code class="language-rust ignore">element : Type</code></pre>
 <p>As previously mentioned, even types are functions, so we can have a function as a type. For example:</p>
 <pre><code class="language-rust ignore">Problem : Equal Bool Bool.true Bool.true</code></pre>
-<p>We can see that we have an element called &quot;<em>Problem</em>&quot; and it is of type &quot;<em>(Equal Bool Bool.true Bool.true)</em>&quot;. We have seen this structure several times in the past chapters, and it is now easy to understand that this function is a type and, just as <strong>we don't write</strong> it, we <strong>cannot</strong> simply copy the function to the constructors of this type.</p>
-<pre><code class="language-rust ignore">Suco: Type
-Suco.laranja : Type</code></pre>
+<p>We can see that we have an element called "<em>Problem</em>" and it is of type "<em>(Equal Bool Bool.true Bool.true)</em>". We have seen this structure several times in the past chapters, and it is now easy to understand that this function is a type and, just as <strong>we don't write</strong> it, we <strong>cannot</strong> simply copy the function to the constructors of this type.</p>
+<pre><code class="language-rust ignore">Juice: Type
+Juice.orange : Type</code></pre>
 <p><em>Juice</em> is of type <em>Type</em>, but <em>Juice.orange</em> is not of type <em>Type</em>, it is of type <em>Juice</em>.</p>
 <p>But be aware that all syntactically well-formed propositions have type Type in Kind, regardless of whether they are true or not. Simply being a proposition is one thing; being demonstrable is another thing!</p>
 <p>In fact, propositions do not just have types: they are first-class objects that can be manipulated in the same way as other entities in the world of Kind. So far, we have seen a primary location where propositions can appear: in the type signatures of functions.</p>
@@ -2064,14 +2052,14 @@ InjectiveNat = Injective.new Nat.succ_injective
 ``` -->
 <div style="break-before: page; page-break-before: always;"></div><h2 id="logical-connectives"><a class="header" href="#logical-connectives">Logical Connectives</a></h2>
 <h3 id="conjunction"><a class="header" href="#conjunction">Conjunction</a></h3>
-<p>The conjunction (logical &quot;<em>and</em>&quot;) in kind takes two propositions <em>a</em> and <em>b</em>, which should return a <em>Boolean</em> value <code>true</code> or <code>false</code>.</p>
+<p>The conjunction (logical "<em>and</em>") in kind takes two propositions <em>a</em> and <em>b</em>, which should return a <em>Boolean</em> value <code>true</code> or <code>false</code>.</p>
 <pre><code class="language-rust ignore">Bool.and (a: Bool) (b: Bool) : Bool
 Bool.and Bool.true  b = b
 Bool.and Bool.false b = Bool.false</code></pre>
 <p>If <em>a</em> is true, it is sufficient to return the value of <em>b</em>. However, if <em>a</em> is false, there is no need to verify the value of the second element.</p>
 <p>Because it is a limited case (there are only two options), it is possible to verify with a simple proof:</p>
-<pre><code class="language-rust ignore">ConjuntiveBool : Equal Bool (Bool.and Bool.true Bool.false) Bool.false
-ConjuntiveBool = Equal.refl</code></pre>
+<pre><code class="language-rust ignore">ConjunctiveBool : Equal Bool (Bool.and Bool.true Bool.false) Bool.false
+ConjunctiveBool = Equal.refl</code></pre>
 <h4 id="and_exercise"><a class="header" href="#and_exercise">And_exercise</a></h4>
 <pre><code class="language-rust ignore">And_exercise : Pair (Equal (Plus 3n 4n) 7n) (Equal (Mult 2n 2n) 4n)
 And_exercise = ?</code></pre>
@@ -2143,8 +2131,8 @@ And_commut (Pair.new fst snd)    = Pair.new snd fst</code></pre>
 <h4 id="and_assoc"><a class="header" href="#and_assoc">And_assoc</a></h4>
 <pre><code class="language-rust ignore">And_assoc &lt;p&gt; &lt;q&gt; &lt;r&gt; (a: Pair p (Pair q r))  : Pair (Pair p q) r
 And_assoc (Pair.new p (Pair q r) fst (Pair.new snd trd)) = ?</code></pre>
-<h3 id="disjunção"><a class="header" href="#disjunção">Disjunção</a></h3>
-<p>Another important connective is the disjunction, or logical &quot;<em>or</em>&quot;, of two propositions:</p>
+<h3 id="disjunction"><a class="header" href="#disjunction">Disjunction</a></h3>
+<p>Another important connective is the disjunction, or logical "<em>or</em>", of two propositions:</p>
 <p><code>Either a b</code> is true when either <em>a</em> or <em>b</em> is <em>true</em>. The first case was marked with <em>left</em>, and the second with <em>right</em>.</p>
 <p>To use a disjunctive hypothesis in a proof, we proceed by case analysis, which, as for Nat or other data types, can be done with pattern matching. Here is an example:</p>
 <pre><code class="language-rust ignore">Or_example (n: Nat) (m: Nat) (e: (Either (Equal n 0n) (Equal m 0n))) : Equal (Mult n m) 0n
@@ -2169,20 +2157,20 @@ Or_example (Nat.succ n) (Nat.succ m) (Either.right l r val) =
         (Unit.new))
 Empty.absurd p</code></pre>
 <p>Conversely, to show that a disjunction is valid, we need to show that one of its sides is valid. This can be done through the Left and Right constructors mentioned above. Here is a trivial use...</p>
-<pre><code class="language-rust ignore"><span class="boring">axiom
-</span>Or_intro_left &lt;a&gt; &lt;b&gt; (t: a) : Either a b
+<pre><code class="language-rust ignore">#axiom
+Or_intro_left &lt;a&gt; &lt;b&gt; (t: a) : Either a b
 Or_intro_left t = Either.left t
 
-<span class="boring">axiom
-</span>Or_intro_right &lt;a&gt; &lt;b&gt; (t: b) : Either a b
+#axiom
+Or_intro_right &lt;a&gt; &lt;b&gt; (t: b) : Either a b
 Or_intro_right t = Either.right t</code></pre>
 <p>... and a slightly more interesting example requiring both.</p>
 <pre><code class="language-rust ignore">Zero_or_succ (n: Nat)     : Either (Equal n 0n) (Equal n (Nat.succ (Nat.pred n)))
 Zero_or_succ Nat.zero     = Either.left  Equal.refl
 Zero_or_succ (Nat.succ n) = Either.right Equal.refl</code></pre>
 <h4 id="mult_eq_0"><a class="header" href="#mult_eq_0">Mult_eq_0</a></h4>
-<pre><code class="language-rust ignore"><span class="boring">axiom
-</span>Mult_eq_0 (n: Nat) (m: Nat) (e: Equal (Mult n m) 0n) : Either (Equal n 0n) (Equal m 0n)
+<pre><code class="language-rust ignore">#axiom
+Mult_eq_0 (n: Nat) (m: Nat) (e: Equal (Mult n m) 0n) : Either (Equal n 0n) (Equal m 0n)
 Mult_eq_0 n m e = ?</code></pre>
 <h4 id="or_commut"><a class="header" href="#or_commut">Or_commut</a></h4>
 <pre><code class="language-rust ignore">Or_commut &lt;p&gt; &lt;q&gt; (e: Either p q) : Either q p
@@ -2197,7 +2185,7 @@ Not p = p -&gt; Empty</code></pre>
 <p>Since <em>Empty</em> is a contradictory proposition, the principle of explosion also applies to it. If we obtain <em>Empty</em> in the proof context, we can call it <em>Empty</em> or absurd to complete any goal:</p>
 <pre><code class="language-rust ignore">Ex_falso_quodlibet &lt;p&gt; : Empty -&gt; p
 Ex_falso_quodlibet p   = e =&gt; Empty.absurd e</code></pre>
-<p>The <em>Latin phrase ex falso quodlibet</em> literally means &quot;from falsehood, anything follows&quot;; this is another common name for the principle of explosion.</p>
+<p>The <em>Latin phrase ex falso quodlibet</em> literally means "from falsehood, anything follows"; this is another common name for the principle of explosion.</p>
 <h4 id="not_implies_our_not"><a class="header" href="#not_implies_our_not">Not_implies_our_not</a></h4>
 <p>Show that the definition of negation in Kind implies the intuitive one mentioned above:</p>
 <pre><code class="language-rust ignore">Not_implies_our_not &lt;p&gt; &lt;q&gt; (e: Not p) : q -&gt; (p -&gt; q)
@@ -2212,8 +2200,8 @@ Zero_not_one =
 <pre><code class="language-rust ignore">Not_false : Not Empty
 Not_false = e =&gt; Empty.absurd e
 
-Contradiction_implies_anythig &lt;p&gt; &lt;q&gt; (a: Pair p (Not p)) : q
-Contradiction_implies_anythig p q (Pair.new fst snd) =
+Contradiction_implies_anything &lt;p&gt; &lt;q&gt; (a: Pair p (Not p)) : q
+Contradiction_implies_anything p q (Pair.new fst snd) =
   let app = snd fst
   Empty.absurd app
 </code></pre>
@@ -2236,7 +2224,7 @@ Not_true_is_false Bool.true e = Empty.absurd (e Equal.refl)</code></pre>
 True_is_true = Unit.new</code></pre>
 <p>Unlike <em>Empty</em>, which is widely used, <code>Unit</code> is rarely used in proofs since it is trivial (and therefore uninteresting) to prove as a goal and carries no useful information as a hypothesis. However, it can be quite useful when defining complex proofs using conditionals or as a parameter for higher-order proofs. We will see examples of this use of <code>Unit</code> later.</p>
 <h2 id="logical-equivalence"><a class="header" href="#logical-equivalence">Logical Equivalence</a></h2>
-<p>Logical Equivalence. The useful connective &quot;if and only if&quot;, which asserts that two propositions have the same truth value, is just the conjunction of two implications.</p>
+<p>Logical Equivalence. The useful connective "if and only if", which asserts that two propositions have the same truth value, is just the conjunction of two implications.</p>
 <pre><code class="language-rust ignore">record Equivalence (p: Type) (q: Type) {
  lft: p -&gt; q 
  rgt: q -&gt; p
@@ -2371,7 +2359,7 @@ Four_is_even = $ 2n Equal.refl</code></pre>
 <pre><code class="language-rust ignore">Exists_example_2 (n: Nat) (m: Sigma Nat (m =&gt; (Equal Nat n (Nat.add 4n m)))) : Sigma Nat (o =&gt; (Equal Nat n (Nat.add 2n o)))
 Exists_example_2 n (Sigma.new Nat s fst snd) = Sigma.new fst ?</code></pre>
 <h4 id="dist_not_exists"><a class="header" href="#dist_not_exists">Dist_not_exists</a></h4>
-<p>Prove that &quot;p is true for all x&quot; implies &quot;there is no x for which p is not true&quot;</p>
+<p>Prove that "p is true for all x" implies "there is no x for which p is not true"</p>
 <pre><code class="language-rust ignore">Dist_not_exists &lt;a&gt; &lt;p: a -&gt; Type&gt; (f: (x: a) -&gt; (p x)) : Not (Sigma a (x =&gt; ( Not (p x))))
 Dist_not_exists a p f = ?</code></pre>
 <h4 id="dist_exists_or"><a class="header" href="#dist_exists_or">Dist_exists_or</a></h4>
@@ -2381,7 +2369,7 @@ Dist_exists_or a p q = ?dist_exists_or_rhs</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="propositional-programming"><a class="header" href="#propositional-programming">Propositional programming</a></h1>
 <p>The logical connectives we have seen provide a rich vocabulary for defining complex propositions from simpler ones. To illustrate, let's see how to express the statement that an element x occurs in a List l. Note that this property has a simple recursive structure:</p>
 <ul>
-<li>If l is the empty list, then x cannot occur in it, so the property &quot;x appears in l&quot; is simply false.</li>
+<li>If l is the empty list, then x cannot occur in it, so the property "x appears in l" is simply false.</li>
 <li>Otherwise, l has the form <em>List.cons head tail</em>. In this case, x occurs in l if it is equal to head or if it occurs in tail.</li>
 </ul>
 <p>We can translate this directly into a simple recursive function that takes an element and a List and returns a proposition:</p>
@@ -2404,7 +2392,7 @@ In_map a b f (List.cons head tail) x (Either.left e)  =
     (Equal.rewrite e 
     (y =&gt; (Either (Equal (f x) (f y)) (In (f x) (List.map tail f)))) 
     (Either.left Equal.refl))</code></pre>
-<p>This way of defining propositions recursively, while convenient in some cases, also has some disadvantages. In particular, it is subject to the usual Kind restrictions on the definition of recursive functions, for example, the requirement that they be &quot;obviously terminating&quot;. In the next chapter, we will see how to define propositions inductively, a different technique with its own set of strengths and limitations.</p>
+<p>This way of defining propositions recursively, while convenient in some cases, also has some disadvantages. In particular, it is subject to the usual Kind restrictions on the definition of recursive functions, for example, the requirement that they be "obviously terminating". In the next chapter, we will see how to define propositions inductively, a different technique with its own set of strengths and limitations.</p>
 <h4 id="in_map_equiv"><a class="header" href="#in_map_equiv">In_map_equiv</a></h4>
 <pre><code class="language-rust  ignore">In_map_equiv &lt;a&gt; &lt;b&gt; (f: a -&gt; b) (l: List a) (y: b) :
    Equivalence (In y (List.map l f)) (Sigma a (x =&gt; (Pair (Equal (f x) y) (In x l))))
@@ -2457,7 +2445,7 @@ Combine_odd_elim_even n podd peven p e = ?</code></pre>
 PlusCommutative m n = ?</code></pre>
 <p>Kind prints the statement of the plusCommutative theorem in the same way it prints the type of any term we ask it to check. Why?</p>
 <p>The reason is that the identifier plusCommutative actually refers to a proof object - a data structure that represents a logical derivation establishing the truth of the statement <em>(n: Nat) (m: Nat) : n + m = m + n</em>. The type of this object is the statement of the theorem of which it is a proof.
-Intuitively, this makes sense because the statement of a theorem tells us what we can use it for, just as the type of a computational object tells us what we can do with that object - for example, if we have a term of type <em>Nat -&gt; Nat -&gt; Nat</em>, we can give it two Nats as arguments and get a Nat back. Similarly, if we have an object of type <em>n = m -&gt; n + n = m + m</em> and provide it with an &quot;argument&quot; of type <em>n = m</em>, we can derive <em>n + n = m + m</em>.
+Intuitively, this makes sense because the statement of a theorem tells us what we can use it for, just as the type of a computational object tells us what we can do with that object - for example, if we have a term of type <em>Nat -&gt; Nat -&gt; Nat</em>, we can give it two Nats as arguments and get a Nat back. Similarly, if we have an object of type <em>n = m -&gt; n + n = m + m</em> and provide it with an "argument" of type <em>n = m</em>, we can derive <em>n + n = m + m</em>.
 Operationally, this analogy goes even further: by applying a theorem, as if it were a function, to hypotheses with corresponding types, we can specialize its result without having to resort to intermediate assertions. For example, suppose we wanted to prove the following result:</p>
 <pre><code class="language-rust  ignore">Plus_comm3a: (n: Nat) (m: Nat) (p: Nat) : Equal (Nat.add n (Nat.add m p)) (Nat.add (Nat.add p m) n)</code></pre>
 <p>At first glance, it seems like we should be able to prove this by case analysis, for the zero and succ _ cases, but that would give us unnecessary work. Let's see an example:</p>
@@ -2513,7 +2501,7 @@ Plus_comm3 m n p =
   let b = Equal.rewrite (Plus_comm m p) (x =&gt; (Equal Nat (Nat.add n (Nat.add m p)) (Nat.add (x) n))) a
   b</code></pre>
 <p>Much simpler and more elegant, it didn't require so much work, a brief reading of the problem practically gave us the solution. Notice that this was no different from everything we have done so far, it is even a repetition of the previous steps, it is similar to the application of a polymorphic function to an argument of type.</p>
-<p>You can &quot;use theorems as functions&quot; in this way with almost all tactics that receive a theorem name as an argument. Note also that theorem application uses the same inference mechanisms as function application; therefore, it is possible, for example, to provide wildcards as arguments to be inferred, or declare some hypotheses of a theorem as implicit by default. These features are illustrated in the proof below.</p>
+<p>You can "use theorems as functions" in this way with almost all tactics that receive a theorem name as an argument. Note also that theorem application uses the same inference mechanisms as function application; therefore, it is possible, for example, to provide wildcards as arguments to be inferred, or declare some hypotheses of a theorem as implicit by default. These features are illustrated in the proof below.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="kind-vs-set-theory"><a class="header" href="#kind-vs-set-theory">Kind vs Set Theory</a></h2>
 <p>The logical core of Coq, the Calculus of Inductive Constructions, differs in some important ways from other formal systems used by mathematicians to write precise and rigorous proofs. For example, in the most popular foundation for mathematics in conventional pen-and-paper, Zermelo-Fraenkel set theory (ZFC), a mathematical object can potentially be a member of many different sets; a term in Kind's logic, on the other hand, is a member of at most one type. This difference often leads to slightly different ways of capturing informal mathematical concepts, but these are largely quite natural and easy to work with. For example, instead of saying that a natural number n belongs to the set of even numbers, we would say in Kind that ev n is true, where ev: <code>Nat -&gt; Type</code> is a property that describes even numbers.</p>
 <p>However, there are some cases where translating standard mathematical reasoning to Kind can be both laborious and sometimes even impossible, unless we enrich the core logic with additional axioms. We conclude this chapter with a brief discussion of some of the most significant differences between the two worlds.</p>
@@ -2527,8 +2515,8 @@ Function_equality_ex1 = Equal.refl
 <p>In common mathematical practice, two functions f and g are considered equal if they produce the same outputs:</p>
 <p>(∀𝑥, 𝑓(𝑥) = 𝑔(𝑥)) → 𝑓 = 𝑔</p>
 <p>This is known as the principle of functional extensionality.</p>
-<p>Informally, an &quot;extensional property&quot; is one that concerns the observable behavior of an object. Thus, functional extensionality simply means that the identity of a function is completely determined by what we can observe from it -- that is, in terms of Kind, the results we obtain after applying it.</p>
-<p>Functional extensionality is not part of Kind's basic axioms. This means that some &quot;reasonable&quot; propositions are not provable.</p>
+<p>Informally, an "extensional property" is one that concerns the observable behavior of an object. Thus, functional extensionality simply means that the identity of a function is completely determined by what we can observe from it -- that is, in terms of Kind, the results we obtain after applying it.</p>
+<p>Functional extensionality is not part of Kind's basic axioms. This means that some "reasonable" propositions are not provable.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Function_equality_ex2 : Equal ((x: Nat) =&gt; Nat.add x 1n) ((x: Nat) =&gt; Nat.add 1n x)
@@ -2550,7 +2538,7 @@ Function_equality_ex2 =
 <p>Unfortunately, there is no simple way to tell whether an axiom is safe to add: it usually takes hard work to establish the consistency of any particular combination of axioms.</p>
 <p>However, it is known that adding functional extensionality, in particular, is consistent.</p>
 <h4 id="tr_rev"><a class="header" href="#tr_rev">Tr_rev</a></h4>
-<p>A problem with the definition of the list reversal function &quot;rev&quot; we have is that it performs a call to &quot;++&quot; at each step. Executing &quot;++&quot; takes asymptotically linear time in the size of the list, which means that &quot;rev&quot; has quadratic running time.
+<p>A problem with the definition of the list reversal function "rev" we have is that it performs a call to "++" at each step. Executing "++" takes asymptotically linear time in the size of the list, which means that "rev" has quadratic running time.
 We can improve this with the following definition:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2682,7 +2670,7 @@ Is_even_prime = (n: Nat) =&gt; Bool.if (Equal n 2n) Bool.true Bool.false
 </span><span class="boring">fn main() {
 </span>Even_1000 : Sigma Nat (k =&gt; Equal 1000n (Nat.double k))
 <span class="boring">}</span></code></pre></pre>
-<p>&quot;<strong>The most straightforward proof of this fact is to provide the value of k explicitly.</strong>&quot;</p>
+<p>"<strong>The most straightforward proof of this fact is to provide the value of k explicitly.</strong>"</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Even_1000 = $ 500n Equal.refl
@@ -2693,7 +2681,7 @@ Is_even_prime = (n: Nat) =&gt; Bool.if (Equal n 2n) Bool.true Bool.false
 </span>Even_1000a : Equal (Evenb 1000n) Bool.true
 Even_1000a = Equal.refl
 <span class="boring">}</span></code></pre></pre>
-<p>&quot;Interestingly, as the two notions are equivalent, we can use the boolean formulation to prove the other without explicitly mentioning the value 500.&quot;</p>
+<p>"Interestingly, as the two notions are equivalent, we can use the boolean formulation to prove the other without explicitly mentioning the value 500."</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Even_1000b : Sigma Nat (k =&gt; Equal 1000n (Nat.double k))
@@ -2716,7 +2704,7 @@ Orb_true_equiv
 Orb_true_equiv b1 b2 = ?
 <span class="boring">}</span></code></pre></pre>
 <h4 id="beq_nat_false_equiv"><a class="header" href="#beq_nat_false_equiv">Beq_nat_false_equiv</a></h4>
-<p>The following theorem is an alternative &quot;negative&quot; formulation of beq_nat_true_equiv that is more convenient in certain situations (we will see examples in later chapters).</p>
+<p>The following theorem is an alternative "negative" formulation of beq_nat_true_equiv that is more convenient in certain situations (we will see examples in later chapters).</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>Beq_nat_false_equiv (n1: Nat) (n2: Nat) : Equivalence (Equal (Nat.equal n1 n2) Bool.false) (Not (Equal n1 n2))
@@ -2875,7 +2863,7 @@ Putting it all together, we can translate the definition of parity into a formal
   wrong_ev_0 : Ev Nat.zero
   wrong_ev_ss (pred: Ev n) : Ev (Nat.succ (Nat.succ n))
 }</code></pre>
-<p>Com o seguinte retorno:</p>
+<p>With the following return:</p>
 <pre><code class="language-diff ignore">   - ERROR  Cannot find the definition 'n'.
 
       ┌──[ev.kind2:9:25]
@@ -2888,8 +2876,8 @@ Putting it all together, we can translate the definition of parity into a formal
    10 │    
 
 </code></pre>
-<p>(&quot;Parameter&quot; here is jargon from Kind for an argument to the left of the colon in an inductive definition; &quot;index&quot; is used to refer to arguments to the right of the colon.)</p>
-<p>We can think of the definition of Ev as defining a property of the Kind <code>Ev: Nat -&gt; Type</code>, along with the theorems <code>ev_z: Ev 0 and ev_ss &lt;n : Nat&gt; (pred: Ev n) : Ev (Nat.succ (Nat.succ n))</code>. Such &quot;constructor theorems&quot; have the same status as proven theorems. In particular, we can apply rule names as functions to each other to prove Ev for specific numbers...</p>
+<p>("Parameter" here is jargon from Kind for an argument to the left of the colon in an inductive definition; "index" is used to refer to arguments to the right of the colon.)</p>
+<p>We can think of the definition of Ev as defining a property of the Kind <code>Ev: Nat -&gt; Type</code>, along with the theorems <code>ev_z: Ev 0 and ev_ss &lt;n : Nat&gt; (pred: Ev n) : Ev (Nat.succ (Nat.succ n))</code>. Such "constructor theorems" have the same status as proven theorems. In particular, we can apply rule names as functions to each other to prove Ev for specific numbers...</p>
 <pre><code class="language-rust ignore">Ev_4 : Ev 4n
 Ev_4 = Ev.ev_ss 2n (Ev.ev_ss 0n Ev.ev_z)</code></pre>
 <p>We can also prove theorems that have hypotheses involving Ev.</p>
@@ -2906,7 +2894,7 @@ Ev_double n = ?</code></pre>
 <li><code>e</code> is <code>ev_z</code> (and <em>n</em> is <em>Nat.zero</em>), or</li>
 <li><code>e</code> is <code>ev_ss</code> applied to induction with <code>n</code> and it is equal to the successor of the successor of <code>n</code>*.</li>
 </ul>
-<h6 id="weve-already-used-this-strategy-before-remember-the-problemst3-exercise-from-the-induction-chapter-here-the-difference-is-that-theres-only-one-more-natsucc-in-our-induction"><a class="header" href="#weve-already-used-this-strategy-before-remember-the-problemst3-exercise-from-the-induction-chapter-here-the-difference-is-that-theres-only-one-more-natsucc-in-our-induction"><em>We've already used this strategy before, remember the Problems.t3 exercise from the induction chapter, here the difference is that there's only one more &quot;Nat.succ&quot; in our induction</em></a></h6>
+<h6 id="weve-already-used-this-strategy-before-remember-the-problemst3-exercise-from-the-induction-chapter-here-the-difference-is-that-theres-only-one-more-natsucc-in-our-induction"><a class="header" href="#weve-already-used-this-strategy-before-remember-the-problemst3-exercise-from-the-induction-chapter-here-the-difference-is-that-theres-only-one-more-natsucc-in-our-induction"><em>We've already used this strategy before, remember the Problems.t3 exercise from the induction chapter, here the difference is that there's only one more "Nat.succ" in our induction</em></a></h6>
 <p>This suggests that it should be possible to analyze a hypothesis of the form <code>Ev n</code> in the same way we do with data structures defined inductively; in particular, it should be possible to argue by <em>induction</em> and <em>case analysis</em> on this evidence. Let's see some examples to understand what this means in practice.</p>
 <h3 id="pattern-matching-on-evidence"><a class="header" href="#pattern-matching-on-evidence">Pattern Matching on Evidence</a></h3>
 <p>Suppose we are proving some fact involving a number n and we are given the hypothesis <code>Ev n</code>. We already know how to perform <em>case analysis</em> on <code>n</code> using the inversion tactic, generating separate subgoals for the case where <code>n = Nat.zero</code> and the case where <code>n = Nat.succ n</code> for some <code>n</code>. But for some proofs, we may want to directly analyze the evidence that <code>Ev n</code> is true.</p>
@@ -2929,7 +2917,7 @@ Ev_minus2 (Nat.succ (Nat.succ n)) (Ev.ev_ss e) = e</code></pre>
 <p>Intuitively, we know that the evidence for the hypothesis cannot consist solely of the constructor <code>ev_z</code>, since <code>Nat.zero</code> and <code>Nat.succ</code> are different constructors of the type Nat; therefore, <code>ev_ss</code> is the only applicable case. Unfortunately, <em>pattern matching</em> is not smart enough to realize this and still generates two subgoals. Even worse, by doing so, it leaves the final goal unchanged, failing to provide any useful information to complete the proof.</p>
 <p>The inversion tactic, on the other hand, can detect (1) that the first case does not apply and (2) that the n appearing in the Ev_SS case must be the same as n. This allows us to conclude the proof.</p>
 <pre><code class="language-rust  ignore">Evss_ev n (Ev.ev_ss e) = e </code></pre>
-<p>Using dependent pattern matching, we can also apply the principle of explosion to &quot;obviously contradictory&quot; hypotheses involving inductive properties. For example:</p>
+<p>Using dependent pattern matching, we can also apply the principle of explosion to "obviously contradictory" hypotheses involving inductive properties. For example:</p>
 <pre><code class="language-rust  ignore">One_not_even : Not (Ev 1n)
 </code></pre>
 <h3 id="inversion_practice"><a class="header" href="#inversion_practice">Inversion_practice</a></h3>
@@ -3018,13 +3006,13 @@ Ev_pp Nat.zero m p e1 e2 =
 ``</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="inductive-relations"><a class="header" href="#inductive-relations">Inductive Relations</a></h2>
 <p>A proposition parameterized by a number (like Ev) can be considered as a property, meaning it defines a subset of Nat, specifically those numbers for which the proposition holds. Similarly, a proposition with two arguments can be considered as a relation, meaning it defines a set of pairs for which the proposition holds.</p>
-<p>A useful example is the &quot;less than or equal&quot; relation between numbers. The following definition should be quite intuitive. It states that there are two ways to provide evidence that a number is less than or equal to another: observe that they are the same number or provide evidence that the first is less than or equal to the predecessor of the second.</p>
+<p>A useful example is the "less than or equal" relation between numbers. The following definition should be quite intuitive. It states that there are two ways to provide evidence that a number is less than or equal to another: observe that they are the same number or provide evidence that the first is less than or equal to the predecessor of the second.</p>
 <pre><code class="language-rust ignore">type Le (n: Nat) ~ (m: Nat) {
   n : Le n n
   S &lt;m: Nat&gt; (pred: (Le n m)) : (Le n (Nat.succ m)) 
 }</code></pre>
 <p>Proofs of facts about <code>Le</code> using the constructors <code>n</code> and <code>S</code> follow the same patterns as proofs about properties, like Ev above. We can apply the constructors to prove goals about Le (e.g., show that <code>Le 3n 3n</code> or <code>Le 3n 6n</code>) and we can use pattern matching to extract information from <code>Le</code> hypotheses in the context (e.g., prove that <code>(Le 2n 1n) -&gt; (Equal (Plus 2n 2n) 5n)</code>).</p>
-<p>Here are some sanity checks about the definition. (Note that while they are of the same type as &quot;simple tests&quot; we gave for the test functions we wrote in the early lectures, we must construct their proofs explicitly - Refl doesn't do the job because the proofs are not just a matter of simplifying computations.)</p>
+<p>Here are some sanity checks about the definition. (Note that while they are of the same type as "simple tests" we gave for the test functions we wrote in the early lectures, we must construct their proofs explicitly - Refl doesn't do the job because the proofs are not just a matter of simplifying computations.)</p>
 <pre><code class="language-rust ignore">Test_le1 : Le 3n 3n
 Test_le1 = Le.n 3n
 
@@ -3035,7 +3023,7 @@ Test_le3 (l: Le 2n 1n) : Equal (Nat.add 2n 2n) 5n
 Test_le3 Le.n = Empty.absurd // TODO
 Test_le3 (Le.S Le.n) = Empty.absurd // TODO
 Test_le3 (Le.S (Le.S len)) = Empty.absurd // TODO</code></pre>
-<p>The &quot;strictly less than&quot; relation <code>n &lt; m</code> can now be defined in terms of <code>Le</code>.</p>
+<p>The "strictly less than" relation <code>n &lt; m</code> can now be defined in terms of <code>Le</code>.</p>
 <pre><code class="language-rs ignore">Lt (n: Nat) (m: Nat) : Type
 Lt n m = Le (Nat.succ n) m
 </code></pre>
@@ -3053,15 +3041,15 @@ Lt n m = Le (Nat.succ n) m
   2 &lt;n: Nat&gt; (pred: Ev (Nat.succ (Nat.succ n))) : Next_even n (Nat.succ (Nat.succ n))
 }
 </code></pre>
-<h4 id="total_relation-opcional"><a class="header" href="#total_relation-opcional">Total_relation (Opcional)</a></h4>
+<h4 id="total_relation-optional"><a class="header" href="#total_relation-optional">Total_relation (Optional)</a></h4>
 <p>Define an inductive binary relation Total_relation that holds for all pairs of natural numbers.</p>
 <pre><code class="language-rs ignore">// TODO
 </code></pre>
-<h4 id="empty_relation-opcional"><a class="header" href="#empty_relation-opcional">Empty_relation (Opcional)</a></h4>
+<h4 id="empty_relation-optional"><a class="header" href="#empty_relation-optional">Empty_relation (Optional)</a></h4>
 <p>Define an inductive binary relation Empty_relation (about numbers) that never holds.</p>
 <pre><code class="language-rs ignore">// TODO
 </code></pre>
-<h4 id="le_exercises-opcional"><a class="header" href="#le_exercises-opcional">Le_exercises (Opcional)</a></h4>
+<h4 id="le_exercises-optional"><a class="header" href="#le_exercises-optional">Le_exercises (Optional)</a></h4>
 <p>Here are some facts about the relations <code>Le</code> and <code>Lt</code> that we will need later in the course. The proofs are good practice exercises.</p>
 <pre><code class="language-rust ignore">Le.trans (n: Nat) (m: Nat) (o: Nat) (x: Le m n) (y: Le n o) : Le m o 
 Le.trans n m o x y = ?
@@ -3099,7 +3087,7 @@ Lte_true_trans n m o l k = ?</code></pre>
 <pre><code class="language-rust  ignore">Lte_iff (n: Nat) (m: Nat) : Iff (Equal (Nat.lte n m) Bool.true) (Le n m)
 Lte_iff n m = ?</code></pre>
 <h4 id="r_provability"><a class="header" href="#r_provability">R_provability</a></h4>
-<p>We can define threeplace relations, four-place relations, etc., in just the same way as binary relations.</p>
+<p>We can define three-place relations, four-place relations, etc., in just the same way as binary relations.</p>
 <p>For example, consider the following three-place relation on numbers:</p>
 <pre><code class="language-rust ignore">type R ~ (a: Nat) (b: Nat) (c: Nat) {
   C1 : R 0n 0n 0n
@@ -3150,7 +3138,7 @@ R_equiv_fR m n o = ?</code></pre>
 <li>Prove subseq_app, that for any lists l1, l2, and l3, if l1 is a subsequence of l2, then l1 is also a subsequence of (App l2 l3).</li>
 <li>(Optional, more challenging) Prove subseq_trans, that subsequence is transitive - meaning if l1 is a subsequence of l2 and l2 is a subsequence of l3, then l1 is a subsequence of l3. Hint: <em>Choose your induction carefully!</em></li>
 </ul>
-<h4 id="r_provability2-opcional"><a class="header" href="#r_provability2-opcional">R_provability2 (Opcional)</a></h4>
+<h4 id="r_provability2-optional"><a class="header" href="#r_provability2-optional">R_provability2 (Optional)</a></h4>
 <p>Assuming we have given the following definition to Kind:</p>
 <pre><code class="language-rust  ignore">type Rp ~ (n: Nat) (l: List Nat) {
   C1 
@@ -3373,12 +3361,12 @@ Agora podemos prosseguir realizando a indução diretamente com base nas evidên
 : (Data.Pair (Prop.Equal s (Fold (x =&gt; y =&gt; Data.List.concat x y ) ss [])) ((s2: Data.List t) -&gt; (In s2 ss) -&gt; (Expmatch s2 re)))</code></pre>
 <p>The lemma MStar'' below (along with its inverse, the exercise MStar' above), shows that our definition of Exp_match for Star is equivalent to the one informally given earlier.</p>
 <h4 id="pumping"><a class="header" href="#pumping">pumping</a></h4>
-<p>One of the earliest truly interesting theorems in the theory of regular expressions is the so-called pumping lemma, which states, informally, that any sufficiently long string s matching a regular expression re can be &quot;pumped&quot; by repeating some middle section of s an arbitrary number of times to produce a new string also matching re.</p>
-<p>To start, we need to define what it means to be &quot;sufficiently long&quot;. Since we are working in a constructive logic, we actually need to be able to compute, for each regular expression re, the minimum length for strings s to guarantee &quot;pumpability&quot;.</p>
+<p>One of the earliest truly interesting theorems in the theory of regular expressions is the so-called pumping lemma, which states, informally, that any sufficiently long string s matching a regular expression re can be "pumped" by repeating some middle section of s an arbitrary number of times to produce a new string also matching re.</p>
+<p>To start, we need to define what it means to be "sufficiently long". Since we are working in a constructive logic, we actually need to be able to compute, for each regular expression re, the minimum length for strings s to guarantee "pumpability".</p>
 <pre><code class="language-rust ignore">
 pumping_constant :</code></pre>
 <p>Next, it is useful to define an auxiliary function that repeats a string (appends itself) a certain number of times.</p>
-<pre><code class="language-rus't ignore">napp :
+<pre><code class="language-rus&#39;t ignore">napp :
 
 </code></pre>
 <p>Now, the pumping lemma itself states that if <code>s =&gt; re</code> and if the length of <code>s</code> is at leas't the pumping constant of <code>re</code>, then <code>s</code> can be divided into three substrings <code>s1 ++ s2 ++ s3</code> such that <code>s2</code> can be repeated any' number of times, and the result, when combined with <code>s1</code> and <code>s3</code>, will still match <code>re</code>. Since D is also guaranteed to be non-empty, this gives us a (constructive!) way of generating strings matching <code>re</code> that are as long as we desire.</p>
@@ -3397,7 +3385,7 @@ pumping m le = ?pumping_rhs</code></pre>
   ReflectT    (p: Type) (b = True) : Reflect p b
   ReflectF    (p: Type) (n: Not p) (b = False) : Reflect p b
 }</code></pre>
-<p>The &quot;reflect&quot; property takes two arguments: a proposition p and a Boolean b. Intuitively, it states that the property p is reflected in (i.e., equivalent to) the Boolean b: p is true if and only if <code>b = Bool.true</code>. To understand this, note that by definition, the only way to obtain evidence that &quot;Reflect p True&quot; is true is by showing that p is true and using the &quot;ReflectT&quot; constructor. If we reverse this statement, it means that it should be possible to extract evidence for p from a proof of &quot;Reflect p True&quot;. Similarly, the only way to show &quot;Reflect p False&quot; is by combining evidence of &quot;Not p&quot; with the &quot;ReflectF&quot; constructor.</p>
+<p>The "reflect" property takes two arguments: a proposition p and a Boolean b. Intuitively, it states that the property p is reflected in (i.e., equivalent to) the Boolean b: p is true if and only if <code>b = Bool.true</code>. To understand this, note that by definition, the only way to obtain evidence that "Reflect p True" is true is by showing that p is true and using the "ReflectT" constructor. If we reverse this statement, it means that it should be possible to extract evidence for p from a proof of "Reflect p True". Similarly, the only way to show "Reflect p False" is by combining evidence of "Not p" with the "ReflectF" constructor.</p>
 <p>It is easy to formalize this intuition and show that the two statements are indeed equivalent:</p>
 <pre><code class="language-rust  ignore">Equiv_reflect &lt;b: Bool&gt; (e: Equiv p  (b = True)) : Reflect p b
 Equiv_reflect Bool.false (pb, _) = ReflectF (uninhabited . pb) Equal.refl
@@ -3405,7 +3393,7 @@ Equiv_reflect Bool.true (_, bp)  = ReflectT (bp Refl) Equal.refl</code></pre>
 <h4 id="reflect_equiv"><a class="header" href="#reflect_equiv">Reflect_equiv</a></h4>
 <pre><code class="language-rust  ignore">Reflect_equiv (r: Reflect p b) : Equivalence p  (Bool.equal b Bool.true)
 Reflect_equiv x = ?</code></pre>
-<p>The advantage of &quot;Reflect&quot; over the usual &quot;if and only if&quot; connective is that when we destruct a hypothesis or lemma of the form &quot;Reflect p b&quot;, we can perform a case analysis on b while simultaneously generating appropriate hypotheses in both branches (p in the first subgoal and Not p in the second).</p>
+<p>The advantage of "Reflect" over the usual "if and only if" connective is that when we destruct a hypothesis or lemma of the form "Reflect p b", we can perform a case analysis on b while simultaneously generating appropriate hypotheses in both branches (p in the first subgoal and Not p in the second).</p>
 <pre><code class="language-rust  ignore">Beq_natP &lt;n: Nat&gt; &lt;m : Nat&gt; :  Reflect (Equal n m) (Nat.equal n m)
 Beq_natP {n} {m} = iff_reflect (iff_sym (beq_nat_true_iff n m))</code></pre>
 <p>The new proof of filter_not_empty_In now proceeds as follows. Notice how the calls to destruct and apply are combined into a single destruct call.</p>
@@ -3419,12 +3407,12 @@ Count n (List.cons xs.h xs.t) = Nat.add (Bool.if (Nat.equal n xs.h) 1n 0n)  (Cou
 
 Beq_natP_practice (e: Equal (count n l) Nat.zero) : Not (In n l)
 Beq_natP_practice e = ? </code></pre>
-<p>Indeed, this technique provides us with only a small convenience advantage for the proofs we have seen here, but using &quot;Reflect&quot; consistently often results in noticeably shorter and clearer proof scripts as the proofs grow larger. We will see many more examples in the upcoming chapters.</p>
-<p>The use of the &quot;reflect&quot; property was popularized by SSReflect, a Coq library that has been used to formalize important results in mathematics, including the Four Color Theorem and the Feit-Thompson Theorem. The name SSReflect stands for &quot;small-scale reflection,&quot; which refers to the widespread use of reflection to simplify small proof steps involving Boolean computations.</p>
+<p>Indeed, this technique provides us with only a small convenience advantage for the proofs we have seen here, but using "Reflect" consistently often results in noticeably shorter and clearer proof scripts as the proofs grow larger. We will see many more examples in the upcoming chapters.</p>
+<p>The use of the "reflect" property was popularized by SSReflect, a Coq library that has been used to formalize important results in mathematics, including the Four Color Theorem and the Feit-Thompson Theorem. The name SSReflect stands for "small-scale reflection," which refers to the widespread use of reflection to simplify small proof steps involving Boolean computations.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="additional-exercises-1"><a class="header" href="#additional-exercises-1">Additional Exercises</a></h2>
 <h4 id="nostutter"><a class="header" href="#nostutter">Nostutter</a></h4>
 <p>Formulating inductive definitions of properties is an important skill that you will need in this course. Try to solve this exercise without any help.</p>
-<p>We say that a list &quot;stutters&quot; if it repeats the same element consecutively. The property &quot;Nostutter my_list&quot; means that my_list does not stutter. Formulate an inductive definition for Nostutter. (This is different from the NoDup property in the exercise below; the sequence [1,4,1] repeats but does not stutter.)</p>
+<p>We say that a list "stutters" if it repeats the same element consecutively. The property "Nostutter my_list" means that my_list does not stutter. Formulate an inductive definition for Nostutter. (This is different from the NoDup property in the exercise below; the sequence [1,4,1] repeats but does not stutter.)</p>
 <pre><code class="language-rust  ignore">type Nostutter &lt;t&gt; (l: List t) {
   RemoveMe : Nostutter []
 }</code></pre>
@@ -3450,7 +3438,7 @@ Test_nostutter_4 = ?
 // contradição H1; auto.</code></pre>
 <h4 id="filter_challenge"><a class="header" href="#filter_challenge">Filter_challenge</a></h4>
 <p>Let's prove that our definition of filter from the Poly chapter corresponds to an abstract specification. Here is the specification, informally written in English:</p>
-<p>A list l is an &quot;ordered merge&quot; of l1 and l2 if it contains all the same elements as l1 and l2, in the same order as l1 and l2, but possibly interleaved. For example,</p>
+<p>A list l is an "ordered merge" of l1 and l2 if it contains all the same elements as l1 and l2, in the same order as l1 and l2, but possibly interleaved. For example,</p>
 <p>[1n,4n,6n,2n,3n] is an ordered merge of [1n,6n,2n] and [4n,3n].</p>
 <p>Now, suppose we have a set t, a function test: t -&gt; Bool, and a list l of type List t. Suppose further that l is an ordered merge of two lists, l1 and l2, such that every item in l1 satisfies test and no item in l2 satisfies test. Then, filter test l = l1.</p>
 <p>Translate this specification into a theorem in Kind and prove it. (You will need to start by defining what it means for a list to be an ordered merge of two lists. Do this with an inductive data type, not a function.)</p>
@@ -3535,6 +3523,22 @@ Excluded_middle : (p : Type) : Either p (Not p)</code></pre>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
